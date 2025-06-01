@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Feedback Analyzer | CreativeFlow Pro</title>
+    <style>
+        :root {
+            --primary: #6e45e2;
+            --secondary: #88d3ce;
+            --dark: #2a2d3e;
+            --light: #f9f9ff;
+            --accent: #ff7e5f;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            overflow-x: hidden;
+        }
+        
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        /* Hero Section */
+        .feature-hero {
+            padding: 10rem 0 5rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+        }
+        
+        .feature-hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            animation: fadeInUp 1s ease;
+        }
+        
+        .feature-hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            animation: fadeInUp 1s ease 0.2s forwards;
+            opacity: 0;
+        }
+        
+        /* AI Visualization */
+        .ai-visualization {
+            position: relative;
+            height: 500px;
+            margin: 5rem auto;
+            perspective: 1000px;
+        }
+        
+        .ai-core {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, var(--primary), transparent 70%);
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            filter: blur(20px);
+            opacity: 0.7;
+            animation: pulse 4s infinite alternate;
+        }
+        
+        .data-node {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            animation: float 6s infinite ease-in-out;
+        }
+        
+        .data-node:nth-child(1) {
+            top: 20%;
+            left: 20%;
+            animation-delay: 0s;
+            background-color: var(--accent);
+        }
+        
+        .data-node:nth-child(2) {
+            top: 20%;
+            right: 20%;
+            animation-delay: 0.5s;
+            background-color: var(--secondary);
+        }
+        
+        .data-node:nth-child(3) {
+            bottom: 20%;
+            left: 20%;
+            animation-delay: 1s;
+            background-color: #ffd166;
+        }
+        
+        .data-node:nth-child(4) {
+            bottom: 20%;
+            right: 20%;
+            animation-delay: 1.5s;
+            background-color: #06d6a0;
+        }
+        
+        .data-node i {
+            font-size: 1.5rem;
+            color: white;
+        }
+        
+        .connection-line {
+            position: absolute;
+            background: rgba(255,255,255,0.3);
+            height: 2px;
+            transform-origin: left center;
+            animation: connect 4s infinite;
+        }
+        
+        /* Feature Details */
+        .feature-details {
+            padding: 5rem 0;
+            background-color: white;
+        }
+        
+        .detail-card {
+            background: var(--light);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            transform: translateY(50px);
+            opacity: 0;
+            transition: all 0.6s ease;
+        }
+        
+        .detail-card.visible {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        
+        .detail-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+        
+        /* Use Cases */
+        .use-cases {
+            padding: 5rem 0;
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+        }
+        
+        .case-study {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 1rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transform: scale(0.95);
+            transition: all 0.4s ease;
+        }
+        
+        .case-study:hover {
+            transform: scale(1);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+        
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes pulse {
+            0% {
+                transform: translate(-50%, -50%) scale(1);
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(1.1);
+            }
+        }
+        
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+        
+        @keyframes connect {
+            0% {
+                width: 0;
+                opacity: 0;
+            }
+            30%, 70% {
+                width: 100px;
+                opacity: 0.5;
+            }
+            100% {
+                width: 0;
+                opacity: 0;
+            }
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .feature-hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .ai-visualization {
+                height: 300px;
+            }
+            
+            .data-node {
+                width: 40px;
+                height: 40px;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <i class="fas fa-magic logo-icon"></i>
+                <span>CreativeFlow Pro</span>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#features">Fitur</a></li>
+                    <li><a href="#pricing">Harga</a></li>
+                    <li><a href="#demo">Demo</a></li>
+                </ul>
+            </nav>
+            <button class="cta-button">Coba Gratis</button>
+        </div>
+    </header>
+
+    <section class="feature-hero">
+        <div class="container">
+            <h1>AI Feedback Analyzer</h1>
+            <p>Teknologi canggih kami menganalisis feedback klien untuk mengungkap wawasan mendalam dan membantu Anda memahami kebutuhan mereka dengan lebih baik.</p>
+        </div>
+    </section>
+
+    <div class="ai-visualization">
+        <div class="ai-core"></div>
+        <div class="data-node">
+            <i class="fas fa-comment-dots"></i>
+        </div>
+        <div class="data-node">
+            <i class="fas fa-chart-bar"></i>
+        </div>
+        <div class="data-node">
+            <i class="fas fa-lightbulb"></i>
+        </div>
+        <div class="data-node">
+            <i class="fas fa-check-circle"></i>
+        </div>
+        
+        <!-- Connection lines would be added with JavaScript -->
+    </div>
+
+    <section class="feature-details">
+        <div class="container">
+            <div class="detail-card">
+                <h3>Analisis Sentimen Otomatis</h3>
+                <p>AI kami secara otomatis mengidentifikasi emosi dan nada dalam feedback klien, membantu Anda memahami apakah mereka puas, netral, atau frustrasi dengan pekerjaan Anda.</p>
+            </div>
+            
+            <div class="detail-card">
+                <h3>Pola Feedback</h3>
+                <p>Temukan pola berulang dalam komentar klien. Sistem kami mengelompokkan feedback serupa sehingga Anda dapat mengidentifikasi area yang perlu perbaikan.</p>
+            </div>
+            
+            <div class="detail-card">
+                <h3>Rekomendasi Tindakan</h3>
+                <p>Berdasarkan analisis, AI memberikan saran konkret untuk meningkatkan pekerjaan Anda dan memenuhi harapan klien dengan lebih baik.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="use-cases">
+        <div class="container">
+            <h2 style="text-align: center; margin-bottom: 2rem;">Bagaimana Ini Membantu Anda</h2>
+            
+            <div class="case-study">
+                <h3><i class="fas fa-paint-brush" style="color: var(--accent);"></i> Untuk Desainer</h3>
+                <p>Pahami preferensi visual klien dari komentar mereka. AI mengidentifikasi kata kunci seperti "terlalu ramai", "kurang kontras", atau "warna tidak cocok" dan menerjemahkannya menjadi wawasan yang dapat ditindaklanjuti.</p>
+            </div>
+            
+            <div class="case-study">
+                <h3><i class="fas fa-video" style="color: var(--primary);"></i> Untuk Video Editor</h3>
+                <p>Analisis feedback tentang tempo, transisi, atau alur cerita. Sistem kami mengenali pola dalam revisi sehingga Anda dapat mengantisipasi permintaan klien di proyek berikutnya.</p>
+            </div>
+            
+            <div class="case-study">
+                <h3><i class="fas fa-code" style="color: var(--secondary);"></i> Untuk Developer</h3>
+                <p>Identifikasi masalah UX/UI dari komentar klien yang mungkin tidak mereka ungkapkan secara teknis. AI menerjemahkan bahasa alami menjadi poin perbaikan spesifik.</p>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Animate detail cards on scroll
+        const detailCards = document.querySelectorAll('.detail-card');
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+        
+        detailCards.forEach(card => {
+            observer.observe(card);
+        });
+        
+        // Create connection lines dynamically
+        const aiVisualization = document.querySelector('.ai-visualization');
+        const nodes = document.querySelectorAll('.data-node');
+        
+        nodes.forEach(node => {
+            const line = document.createElement('div');
+            line.className = 'connection-line';
+            
+            // Position line between node and center
+            const nodeRect = node.getBoundingClientRect();
+            const centerX = aiVisualization.offsetWidth / 2;
+            const centerY = aiVisualization.offsetHeight / 2;
+            
+            const angle = Math.atan2(
+                nodeRect.top + nodeRect.height/2 - centerY,
+                nodeRect.left + nodeRect.width/2 - centerX
+            );
+            
+            line.style.width = '0';
+            line.style.left = `${centerX}px`;
+            line.style.top = `${centerY}px`;
+            line.style.transform = `rotate(${angle}rad)`;
+            
+            // Randomize animation delay
+            line.style.animationDelay = `${Math.random() * 2}s`;
+            
+            aiVisualization.appendChild(line);
+        });
+    </script>
+</body>
+</html>
