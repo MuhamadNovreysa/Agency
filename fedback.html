@@ -6,86 +6,272 @@
     <title>AI Feedback Analyzer | CreativeFlow Pro</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        /* ========== GLOBAL STYLES ========== */
         :root {
             --primary: #6e45e2;
+            --primary-light: #8d6bec;
+            --primary-dark: #4d2bcb;
             --secondary: #88d3ce;
+            --secondary-light: #a7e4e0;
+            --secondary-dark: #69c2bd;
             --dark: #2a2d3e;
+            --dark-light: #3c3f54;
+            --dark-lighter: #4e526a;
             --light: #f9f9ff;
+            --light-dark: #e6e6f0;
             --accent: #ff7e5f;
+            --accent-light: #ff957a;
+            --accent-dark: #ff6540;
+            --success: #2ecc71;
+            --warning: #f39c12;
+            --danger: #e74c3c;
+            --gradient-primary: linear-gradient(135deg, var(--primary), var(--secondary));
+            --gradient-accent: linear-gradient(135deg, var(--accent), #ff9a44);
+            --gradient-dark: linear-gradient(135deg, var(--dark), #3a3d5e);
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
         }
 
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        @font-face {
+            font-family: 'Poppins';
+            font-style: normal;
+            font-weight: 300;
+            src: url(https://fonts.gstatic.com/s/poppins/v20/pxiByp8kv8JHgFVrLDz8Z1xlFQ.woff2) format('woff2');
+        }
+        @font-face {
+            font-family: 'Poppins';
+            font-style: normal;
+            font-weight: 400;
+            src: url(https://fonts.gstatic.com/s/poppins/v20/pxiEyp8kv8JHgFVrJJfecg.woff2) format('woff2');
+        }
+        @font-face {
+            font-family: 'Poppins';
+            font-style: normal;
+            font-weight: 500;
+            src: url(https://fonts.gstatic.com/s/poppins/v20/pxiByp8kv8JHgFVrLGT9Z1xlFQ.woff2) format('woff2');
+        }
+        @font-face {
+            font-family: 'Poppins';
+            font-style: normal;
+            font-weight: 600;
+            src: url(https://fonts.gstatic.com/s/poppins/v20/pxiByp8kv8JHgFVrLEj6Z1xlFQ.woff2) format('woff2');
+        }
+        @font-face {
+            font-family: 'Poppins';
+            font-style: normal;
+            font-weight: 700;
+            src: url(https://fonts.gstatic.com/s/poppins/v20/pxiByp8kv8JHgFVrLCz7Z1xlFQ.woff2) format('woff2');
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
 
         body {
             background-color: var(--light);
             color: var(--dark);
             overflow-x: hidden;
+            line-height: 1.7;
+            font-weight: 400;
         }
 
-        /* Header - Minimalist */
+        ::selection {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        /* ========== LAYOUT COMPONENTS ========== */
+        .container {
+            width: 92%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .section {
+            padding: 120px 0;
+            position: relative;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: var(--gradient-primary);
+            border-radius: 2px;
+        }
+
+        .section-subtitle {
+            font-size: 1.1rem;
+            color: var(--dark-lighter);
+            max-width: 700px;
+            margin-bottom: 3rem;
+        }
+
+        .text-gradient {
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* ========== BUTTONS ========== */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 28px;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            position: relative;
+            overflow: hidden;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-primary {
+            background: var(--gradient-primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(110, 69, 226, 0.3);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-accent {
+            background: var(--gradient-accent);
+            color: white;
+        }
+
+        .btn-accent:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255, 126, 95, 0.3);
+        }
+
+        /* ========== HEADER ========== */
         header {
             position: fixed;
             width: 100%;
-            padding: 1.5rem 0;
+            top: 0;
+            left: 0;
             z-index: 1000;
-            background: rgba(255,255,255,0.9);
+            padding: 20px 0;
+            transition: all 0.4s ease;
             backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.05);
         }
 
-        .container {
-            width: 90%;
-            max-width: 1200px;
-            margin: 0 auto;
+        header.scrolled {
+            padding: 15px 0;
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.1);
         }
 
-        /* Hero Section - Futuristic */
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--dark);
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            margin-right: 10px;
+            color: var(--primary);
+            font-size: 1.8rem;
+        }
+
+        /* ========== HERO SECTION ========== */
         .hero {
-            height: 100vh;
+            min-height: 100vh;
             display: flex;
             align-items: center;
             position: relative;
             overflow: hidden;
-            background: linear-gradient(135deg, var(--dark), #3a3d5e);
+            background: var(--gradient-dark);
+            color: white;
+            padding-top: 100px;
         }
 
         .hero-content {
             position: relative;
             z-index: 2;
-            color: white;
             max-width: 600px;
         }
 
-        .hero h1 {
+        .hero-title {
             font-size: 3.5rem;
+            font-weight: 700;
             margin-bottom: 1.5rem;
             line-height: 1.2;
-            background: linear-gradient(to right, white, var(--secondary));
+            background: linear-gradient(to right, white, var(--secondary-light));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             animation: textGradient 8s infinite alternate;
         }
 
-        .hero p {
+        .hero-subtitle {
             font-size: 1.2rem;
             opacity: 0.9;
-            margin-bottom: 2rem;
+            margin-bottom: 2.5rem;
+            font-weight: 300;
         }
 
-        /* AI Visualization - Next Level */
-        .ai-visual {
+        .hero-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 2rem;
+        }
+
+        /* ========== AI VISUALIZATION ========== */
+        .ai-visualization {
             position: absolute;
-            right: -200px;
+            right: -100px;
             top: 50%;
             transform: translateY(-50%);
             width: 800px;
             height: 800px;
+            z-index: 1;
         }
 
         .ai-core {
@@ -107,57 +293,363 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             color: white;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
             transform: translate(-50%, -50%);
             animation: float 6s infinite ease-in-out;
+            z-index: 2;
+            transition: all 0.5s ease;
         }
 
-        /* Feature Cards - Holographic Effect */
-        .features {
-            padding: 8rem 0;
+        .data-node:hover {
+            transform: translate(-50%, -50%) scale(1.1);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .connection-line {
+            position: absolute;
+            height: 2px;
+            background: linear-gradient(to right, rgba(255,255,255,0), rgba(255,255,255,0.5), rgba(255,255,255,0));
+            transform-origin: left center;
+            z-index: 1;
+        }
+
+        /* ========== FEATURES SECTION ========== */
+        .features-section {
             position: relative;
+            overflow: hidden;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
         }
 
         .feature-card {
-            background: rgba(255,255,255,0.1);
-            backdrop-filter: blur(10px);
+            background: white;
             border-radius: 20px;
-            padding: 2.5rem;
-            margin-bottom: 2rem;
-            border: 1px solid rgba(255,255,255,0.2);
-            box-shadow: 0 20px 50px rgba(0,0,0,0.1);
-            transform-style: preserve-3d;
-            transition: all 0.5s ease;
+            padding: 40px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.05);
+            transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
             position: relative;
             overflow: hidden;
+            z-index: 1;
+            border: 1px solid rgba(0, 0, 0, 0.03);
         }
 
         .feature-card::before {
             content: '';
             position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(
-                to bottom right,
-                rgba(110, 69, 226, 0.1),
-                rgba(136, 211, 206, 0.1),
-                rgba(255, 126, 95, 0.1)
-            );
-            transform: rotate(30deg);
-            animation: shine 3s infinite;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(110, 69, 226, 0.03), rgba(136, 211, 206, 0.03));
+            z-index: -1;
         }
 
-        .feature-card h3 {
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+            color: white;
+            background: var(--gradient-primary);
+            box-shadow: 0 10px 20px rgba(110, 69, 226, 0.2);
+        }
+
+        .feature-title {
             font-size: 1.5rem;
-            margin-bottom: 1rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+
+        .feature-description {
+            color: var(--dark-lighter);
+            margin-bottom: 20px;
+        }
+
+        /* ========== HOW IT WORKS SECTION ========== */
+        .how-it-works {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+        }
+
+        .steps-container {
+            position: relative;
+            margin-top: 60px;
+        }
+
+        .step-line {
+            position: absolute;
+            left: 40px;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: linear-gradient(to bottom, var(--primary), var(--secondary));
+            border-radius: 2px;
+            z-index: 1;
+        }
+
+        .step {
+            display: flex;
+            margin-bottom: 60px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .step-number {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            flex-shrink: 0;
+            margin-right: 40px;
+            border: 4px solid white;
+        }
+
+        .step-content {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            flex-grow: 1;
+        }
+
+        .step-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+
+        /* ========== TESTIMONIALS ========== */
+        .testimonials-section {
             position: relative;
         }
 
-        /* Animations */
+        .testimonials-slider {
+            margin-top: 60px;
+            position: relative;
+        }
+
+        .testimonial {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.05);
+            margin: 0 15px;
+            position: relative;
+            border: 1px solid rgba(0, 0, 0, 0.03);
+        }
+
+        .testimonial-quote {
+            font-size: 1.1rem;
+            font-style: italic;
+            color: var(--dark-lighter);
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .testimonial-quote::before {
+            content: '"';
+            position: absolute;
+            top: -20px;
+            left: -15px;
+            font-size: 4rem;
+            color: rgba(110, 69, 226, 0.1);
+            font-family: serif;
+            line-height: 1;
+            z-index: 0;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+        }
+
+        .author-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 20px;
+            border: 3px solid var(--primary-light);
+        }
+
+        .author-info h4 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 5px;
+        }
+
+        .author-info p {
+            color: var(--dark-lighter);
+            font-size: 0.9rem;
+        }
+
+        /* ========== CTA SECTION ========== */
+        .cta-section {
+            background: var(--gradient-dark);
+            color: white;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: -100px;
+            right: -100px;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, var(--primary), transparent 70%);
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.3;
+        }
+
+        .cta-section::after {
+            content: '';
+            position: absolute;
+            bottom: -100px;
+            left: -100px;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, var(--secondary), transparent 70%);
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.3;
+        }
+
+        .cta-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+
+        .cta-subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            max-width: 700px;
+            margin: 0 auto 2.5rem;
+        }
+
+        /* ========== FOOTER ========== */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 80px 0 30px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+
+        .footer-logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+
+        .footer-description {
+            opacity: 0.7;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-link {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .footer-column h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background: var(--gradient-primary);
+            border-radius: 2px;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: white;
+            padding-left: 5px;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.9rem;
+        }
+
+        /* ========== ANIMATIONS ========== */
         @keyframes pulse {
             0% { transform: scale(1); opacity: 0.4; }
             100% { transform: scale(1.1); opacity: 0.6; }
@@ -165,7 +657,7 @@
 
         @keyframes float {
             0%, 100% { transform: translate(-50%, -50%) translateY(0); }
-            50% { transform: translate(-50%, -50%) translateY(-30px); }
+            50% { transform: translate(-50%, -50%) translateY(-20px); }
         }
 
         @keyframes textGradient {
@@ -173,54 +665,150 @@
             100% { background-position: 100% 50%; }
         }
 
-        @keyframes shine {
-            0% { left: -100%; }
-            100% { left: 100%; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Responsive */
+        /* ========== RESPONSIVE ========== */
+        @media (max-width: 1200px) {
+            .ai-visualization {
+                width: 600px;
+                height: 600px;
+                right: -150px;
+            }
+        }
+
         @media (max-width: 992px) {
             .hero {
-                height: auto;
-                padding: 10rem 0 5rem;
+                padding: 120px 0 80px;
                 text-align: center;
             }
-            
-            .ai-visual {
+
+            .hero-content {
+                max-width: 100%;
+                margin-bottom: 60px;
+            }
+
+            .hero-title {
+                font-size: 2.8rem;
+            }
+
+            .hero-buttons {
+                justify-content: center;
+            }
+
+            .ai-visualization {
                 position: relative;
                 right: auto;
                 top: auto;
                 transform: none;
                 width: 100%;
-                height: 300px;
-                margin-top: 3rem;
+                height: 400px;
+                margin: 0 auto;
             }
-            
-            .hero-content {
-                max-width: 100%;
+
+            .section {
+                padding: 80px 0;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.2rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .btn {
+                width: 100%;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .step {
+                flex-direction: column;
+            }
+
+            .step-number {
+                margin-right: 0;
+                margin-bottom: 20px;
+            }
+
+            .step-line {
+                left: 40px;
+                top: 40px;
+                bottom: 40px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero-title {
+                font-size: 1.8rem;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            .feature-card {
+                padding: 30px;
+            }
+
+            .testimonial {
+                padding: 30px 20px;
             }
         }
     </style>
 </head>
 <body>
-    <header>
+    <!-- ========== HEADER ========== -->
+    <header id="header">
         <div class="container">
-            <div class="logo">
-                <i class="fas fa-magic"></i>
-                <span>CreativeFlow Pro</span>
+            <div class="header-container">
+                <a href="#" class="logo">
+                    <i class="fas fa-magic logo-icon"></i>
+                    <span>CreativeFlow Pro</span>
+                </a>
+                <nav>
+                    <ul>
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#how-it-works">How It Works</a></li>
+                        <li><a href="#testimonials">Testimonials</a></li>
+                        <li><a href="#pricing">Pricing</a></li>
+                    </ul>
+                </nav>
+                <a href="#" class="btn btn-primary">Get Started</a>
             </div>
         </div>
     </header>
 
+    <!-- ========== HERO SECTION ========== -->
     <section class="hero">
         <div class="container">
             <div class="hero-content">
-                <h1>Decode Client Feedback with AI</h1>
-                <p>Our advanced neural networks analyze feedback patterns to reveal hidden insights about your clients' true preferences.</p>
-                <button class="cta-button">Request Demo</button>
+                <h1 class="hero-title">AI-Powered Feedback Analysis</h1>
+                <p class="hero-subtitle">Our advanced neural networks analyze client feedback to reveal hidden insights and help you understand their true preferences with 92% accuracy.</p>
+                <div class="hero-buttons">
+                    <a href="#" class="btn btn-primary">Start Free Trial</a>
+                    <a href="#" class="btn btn-secondary">See Demo</a>
+                </div>
             </div>
             
-            <div class="ai-visual">
+            <div class="ai-visualization">
                 <div class="ai-core"></div>
                 <div class="data-node" style="top: 30%; left: 30%; background: var(--accent);">
                     <i class="fas fa-comment-dots"></i>
@@ -238,27 +826,268 @@
         </div>
     </section>
 
-    <section class="features">
+    <!-- ========== FEATURES SECTION ========== -->
+    <section class="section features-section" id="features">
         <div class="container">
-            <div class="feature-card">
-                <h3>Sentiment Analysis</h3>
-                <p>Real-time emotion detection from client comments with 95% accuracy. Know if they're excited, frustrated, or confused before you reply.</p>
-            </div>
+            <h2 class="section-title">Powerful <span class="text-gradient">Features</span></h2>
+            <p class="section-subtitle">Our AI Feedback Analyzer provides deep insights that help you improve your creative work based on real client feedback patterns.</p>
             
-            <div class="feature-card">
-                <h3>Pattern Recognition</h3>
-                <p>AI identifies recurring themes across projects. Discover that 78% of clients actually want "minimalist designs" when they say "make it pop".</p>
-            </div>
-            
-            <div class="feature-card">
-                <h3>Smart Suggestions</h3>
-                <p>Get AI-powered recommendations like "Add more white space" or "Increase contrast by 20%" based on historical project data.</p>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-comments"></i>
+                    </div>
+                    <h3 class="feature-title">Sentiment Analysis</h3>
+                    <p class="feature-description">Detect emotions and tone in client feedback to understand satisfaction levels and emotional responses to your work.</p>
+                    <a href="#" class="btn btn-accent">Learn More</a>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-project-diagram"></i>
+                    </div>
+                    <h3 class="feature-title">Pattern Recognition</h3>
+                    <p class="feature-description">Identify recurring themes and common requests across multiple projects to improve your creative process.</p>
+                    <a href="#" class="btn btn-accent">Learn More</a>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <h3 class="feature-title">Smart Recommendations</h3>
+                    <p class="feature-description">Get AI-powered suggestions for improvements based on analysis of thousands of successful creative projects.</p>
+                    <a href="#" class="btn btn-accent">Learn More</a>
+                </div>
             </div>
         </div>
     </section>
 
+    <!-- ========== HOW IT WORKS SECTION ========== -->
+    <section class="section how-it-works" id="how-it-works">
+        <div class="container">
+            <h2 class="section-title">How It <span class="text-gradient">Works</span></h2>
+            <p class="section-subtitle">Our AI analyzes your client feedback in three simple steps to deliver actionable insights.</p>
+            
+            <div class="steps-container">
+                <div class="step-line"></div>
+                
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3 class="step-title">Collect Feedback</h3>
+                        <p>Our system automatically gathers all client comments, emails, and notes from your CreativeFlow Pro projects into one centralized location.</p>
+                    </div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3 class="step-title">AI Processing</h3>
+                        <p>Advanced natural language processing algorithms analyze the text for sentiment, keywords, and hidden patterns that humans might miss.</p>
+                    </div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3 class="step-title">Deliver Insights</h3>
+                        <p>You receive clear visual reports highlighting key findings and actionable recommendations to improve your creative work.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== TESTIMONIALS SECTION ========== -->
+    <section class="section testimonials-section" id="testimonials">
+        <div class="container">
+            <h2 class="section-title">What <span class="text-gradient">Clients Say</span></h2>
+            <p class="section-subtitle">Hear from creative professionals who transformed their workflow with our AI Feedback Analyzer.</p>
+            
+            <div class="testimonials-slider">
+                <div class="testimonial">
+                    <p class="testimonial-quote">The AI Feedback Analyzer helped us identify that 80% of our clients actually wanted simpler designs when they asked for 'more creative' solutions. This insight completely changed our approach.</p>
+                    <div class="testimonial-author">
+                        <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Sarah Johnson" class="author-avatar">
+                        <div class="author-info">
+                            <h4>Sarah Johnson</h4>
+                            <p>Creative Director, Design Studio</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== CTA SECTION ========== -->
+    <section class="section cta-section">
+        <div class="container">
+            <h2 class="cta-title">Ready to Transform Your Creative Process?</h2>
+            <p class="cta-subtitle">Join thousands of creative professionals who use AI Feedback Analyzer to deliver better work and happier clients.</p>
+            <a href="#" class="btn btn-primary btn-lg">Start Your Free Trial</a>
+        </div>
+    </section>
+
+    <!-- ========== FOOTER ========== -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <a href="#" class="footer-logo">
+                        <i class="fas fa-magic"></i> CreativeFlow Pro
+                    </a>
+                    <p class="footer-description">The all-in-one platform for creative professionals to manage projects, collaborate with clients, and grow their business.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Product</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Features</a></li>
+                        <li><a href="#">Pricing</a></li>
+                        <li><a href="#">Integrations</a></li>
+                        <li><a href="#">Updates</a></li>
+                        <li><a href="#">Roadmap</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Resources</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Tutorials</a></li>
+                        <li><a href="#">Templates</a></li>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">API Docs</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Company</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Contact</a></li>
+                        <li><a href="#">Privacy</a></li>
+                        <li><a href="#">Terms</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2023 CreativeFlow Pro. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ========== SCRIPTS ========== -->
     <script>
-        // 3D Tilt Effect
+        // Header Scroll Effect
+        window.addEventListener('scroll', function() {
+            const header = document.getElementById('header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Animate elements on scroll
+        const animateOnScroll = function() {
+            const elements = document.querySelectorAll('.feature-card, .step, .testimonial');
+            
+            elements.forEach(element => {
+                const elementPosition = element.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
+                
+                if (elementPosition < windowHeight - 100) {
+                    element.style.opacity = '1';
+                    element.style.transform = 'translateY(0)';
+                }
+            });
+        };
+
+        // Set initial state
+        document.querySelectorAll('.feature-card, .step, .testimonial').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'all 0.6s cubic-bezier(0.25, 0.8, 0.25, 1)';
+        });
+
+        // Run on load and scroll
+        window.addEventListener('load', animateOnScroll);
+        window.addEventListener('scroll', animateOnScroll);
+
+        // Dynamic Connection Lines for AI Visualization
+        function createConnections() {
+            const core = document.querySelector('.ai-core');
+            const nodes = document.querySelectorAll('.data-node');
+            const visualization = document.querySelector('.ai-visualization');
+            
+            // Clear existing connections
+            document.querySelectorAll('.connection-line').forEach(el => el.remove());
+            
+            nodes.forEach(node => {
+                const line = document.createElement('div');
+                line.className = 'connection-line';
+                
+                const coreRect = core.getBoundingClientRect();
+                const nodeRect = node.getBoundingClientRect();
+                const visRect = visualization.getBoundingClientRect();
+                
+                const coreX = coreRect.left + coreRect.width/2 - visRect.left;
+                const coreY = coreRect.top + coreRect.height/2 - visRect.top;
+                const nodeX = nodeRect.left + nodeRect.width/2 - visRect.left;
+                const nodeY = nodeRect.top + nodeRect.height/2 - visRect.top;
+                
+                const length = Math.sqrt(Math.pow(nodeX - coreX, 2) + Math.pow(nodeY - coreY, 2));
+                const angle = Math.atan2(nodeY - coreY, nodeX - coreX);
+                
+                line.style.width = `${length}px`;
+                line.style.left = `${coreX}px`;
+                line.style.top = `${coreY}px`;
+                line.style.transform = `rotate(${angle}rad)`;
+                line.style.opacity = '0';
+                
+                visualization.appendChild(line);
+                
+                                // Animate in
+                setTimeout(() => {
+                    line.style.transition = 'opacity 0.8s ease';
+                    line.style.opacity = '0.3';
+                    
+                    // Pulsing animation
+                    let pulseCount = 0;
+                    const pulseInterval = setInterval(() => {
+                        pulseCount++;
+                        if (pulseCount > 3) {
+                            clearInterval(pulseInterval);
+                            line.style.opacity = '0';
+                            setTimeout(() => line.remove(), 1000);
+                        } else {
+                            line.style.opacity = '0.3';
+                            setTimeout(() => {
+                                line.style.opacity = '0.1';
+                            }, 500);
+                        }
+                    }, 1500);
+                }, Math.random() * 1000);
+            });
+        }
+
+        // Create initial connections
+        createConnections();
+
+        // Continuous connection animation
+        setInterval(createConnections, 4000);
+
+        // 3D Tilt Effect for Feature Cards
         document.querySelectorAll('.feature-card').forEach(card => {
             card.addEventListener('mousemove', (e) => {
                 const x = e.clientX - card.getBoundingClientRect().left;
@@ -267,68 +1096,250 @@
                 const centerX = card.offsetWidth / 2;
                 const centerY = card.offsetHeight / 2;
                 
-                const angleX = (y - centerY) / 20;
-                const angleY = (centerX - x) / 20;
+                const angleX = (y - centerY) / 15;
+                const angleY = (centerX - x) / 15;
                 
-                card.style.transform = `perspective(1000px) rotateX(${angleX}deg) rotateY(${angleY}deg)`;
+                card.style.transform = `perspective(1000px) rotateX(${angleX}deg) rotateY(${angleY}deg) scale(1.03)`;
+                
+                // Glow effect
+                const glow = document.createElement('div');
+                glow.className = 'card-glow';
+                glow.style.left = `${x}px`;
+                glow.style.top = `${y}px`;
+                card.appendChild(glow);
+                
+                setTimeout(() => {
+                    glow.remove();
+                }, 1000);
             });
             
             card.addEventListener('mouseleave', () => {
-                card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0)';
+                card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale(1)';
             });
         });
 
-        // Dynamic Connection Lines
-        const core = document.querySelector('.ai-core');
-        const nodes = document.querySelectorAll('.data-node');
+        // Add glow effect style dynamically
+        const style = document.createElement('style');
+        style.textContent = `
+            .card-glow {
+                position: absolute;
+                width: 100px;
+                height: 100px;
+                background: radial-gradient(circle, rgba(255,255,255,0.8), transparent 70%);
+                border-radius: 50%;
+                transform: translate(-50%, -50%);
+                pointer-events: none;
+                animation: glowFade 1s forwards;
+                z-index: 0;
+            }
+            
+            @keyframes glowFade {
+                0% { transform: translate(-50%, -50%) scale(0.5); opacity: 0.8; }
+                100% { transform: translate(-50%, -50%) scale(1.5); opacity: 0; }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Data Node Interaction
+        document.querySelectorAll('.data-node').forEach(node => {
+            node.addEventListener('mouseenter', () => {
+                node.style.transform = 'translate(-50%, -50%) scale(1.2)';
+                node.style.boxShadow = `0 0 30px ${node.style.backgroundColor}`;
+                
+                // Create ripple effect
+                const ripple = document.createElement('div');
+                ripple.className = 'node-ripple';
+                ripple.style.backgroundColor = node.style.backgroundColor;
+                node.appendChild(ripple);
+                
+                setTimeout(() => {
+                    ripple.style.transform = 'scale(2)';
+                    ripple.style.opacity = '0';
+                }, 10);
+                
+                setTimeout(() => ripple.remove(), 1000);
+            });
+            
+            node.addEventListener('mouseleave', () => {
+                node.style.transform = 'translate(-50%, -50%) scale(1)';
+                node.style.boxShadow = '0 15px 35px rgba(0, 0, 0, 0.2)';
+            });
+            
+            // Add click effect
+            node.addEventListener('click', () => {
+                const burst = document.createElement('div');
+                burst.className = 'node-burst';
+                burst.style.backgroundColor = node.style.backgroundColor;
+                document.querySelector('.ai-visualization').appendChild(burst);
+                
+                setTimeout(() => {
+                    burst.style.transform = 'scale(1.5)';
+                    burst.style.opacity = '0';
+                }, 10);
+                
+                setTimeout(() => burst.remove(), 1000);
+            });
+        });
+
+        // Add node effects style
+        const nodeStyles = document.createElement('style');
+        nodeStyles.textContent = `
+            .node-ripple {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                border-radius: 50%;
+                background-color: inherit;
+                opacity: 0.5;
+                transform: scale(1);
+                transition: all 0.8s ease-out;
+                pointer-events: none;
+                z-index: -1;
+            }
+            
+            .node-burst {
+                position: absolute;
+                width: 80px;
+                height: 80px;
+                border-radius: 50%;
+                background-color: inherit;
+                opacity: 0.3;
+                transform: scale(0);
+                transition: all 0.8s ease-out;
+                pointer-events: none;
+                z-index: 0;
+            }
+        `;
+        document.head.appendChild(nodeStyles);
+
+        // Testimonial Slider
+        const testimonials = [
+            {
+                quote: "The AI Feedback Analyzer helped us identify that 80% of our clients actually wanted simpler designs when they asked for 'more creative' solutions. This insight completely changed our approach.",
+                name: "Sarah Johnson",
+                role: "Creative Director, Design Studio",
+                image: "https://randomuser.me/api/portraits/women/44.jpg"
+            },
+            {
+                quote: "We reduced revision cycles by 60% after implementing the AI suggestions. It's like having a senior creative director reviewing every client comment.",
+                name: "Michael Chen",
+                role: "Lead Designer, Digital Agency",
+                image: "https://randomuser.me/api/portraits/men/32.jpg"
+            },
+            {
+                quote: "The sentiment analysis feature saved us from missing subtle client frustrations that we would have otherwise overlooked. Game changer for client relationships.",
+                name: "Emma Rodriguez",
+                role: "Video Production Manager",
+                image: "https://randomuser.me/api/portraits/women/68.jpg"
+            }
+        ];
+
+        let currentTestimonial = 0;
+        const testimonialElement = document.querySelector('.testimonial');
         
-        function createConnection() {
-            nodes.forEach(node => {
-                const line = document.createElement('div');
-                line.className = 'connection-line';
+        function showTestimonial(index) {
+            testimonialElement.style.opacity = '0';
+            
+            setTimeout(() => {
+                testimonialElement.querySelector('.testimonial-quote').textContent = testimonials[index].quote;
+                testimonialElement.querySelector('.author-avatar').src = testimonials[index].image;
+                testimonialElement.querySelector('h4').textContent = testimonials[index].name;
+                testimonialElement.querySelector('p').textContent = testimonials[index].role;
                 
-                const coreRect = core.getBoundingClientRect();
-                const nodeRect = node.getBoundingClientRect();
+                testimonialElement.style.opacity = '1';
+                testimonialElement.style.animation = 'fadeIn 0.8s ease';
+            }, 500);
+        }
+
+        // Auto-rotate testimonials
+        setInterval(() => {
+            currentTestimonial = (currentTestimonial + 1) % testimonials.length;
+            showTestimonial(currentTestimonial);
+        }, 5000);
+
+        // Smooth scrolling for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
                 
-                const coreX = coreRect.left + coreRect.width / 2;
-                const coreY = coreRect.top + coreRect.height / 2;
-                const nodeX = nodeRect.left + nodeRect.width / 2;
-                const nodeY = nodeRect.top + nodeRect.height / 2;
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    window.scrollTo({
+                        top: target.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Add animated background elements
+        function createFloatingShapes() {
+            const colors = ['rgba(110, 69, 226, 0.1)', 'rgba(136, 211, 206, 0.1)', 'rgba(255, 126, 95, 0.1)'];
+            const sections = document.querySelectorAll('.section, .hero');
+            
+            sections.forEach(section => {
+                // Clear existing shapes
+                section.querySelectorAll('.floating-shape').forEach(shape => shape.remove());
                 
-                const length = Math.sqrt(Math.pow(nodeX - coreX, 2) + Math.pow(nodeY - coreY, 2));
-                const angle = Math.atan2(nodeY - coreY, nodeX - coreX) * 180 / Math.PI;
-                
-                line.style.width = `${length}px`;
-                line.style.left = `${coreX}px`;
-                line.style.top = `${coreY}px`;
-                line.style.transform = `rotate(${angle}deg)`;
-                line.style.transformOrigin = '0 0';
-                
-                document.body.appendChild(line);
-                
-                // Animate
-                let pos = 0;
-                const id = setInterval(() => {
-                    if (pos >= 100) {
-                        clearInterval(id);
-                        setTimeout(() => {
-                            line.remove();
-                            createConnection();
-                        }, 2000);
-                    } else {
-                        pos++;
-                        line.style.background = `linear-gradient(to right, 
-                            transparent ${pos}%, 
-                            rgba(255,255,255,0.3) ${pos}%, 
-                            rgba(255,255,255,0.3) ${pos + 10}%, 
-                            transparent ${pos + 10}%)`;
-                    }
-                }, 20);
+                // Create new shapes
+                for (let i = 0; i < 5; i++) {
+                    const shape = document.createElement('div');
+                    shape.className = 'floating-shape';
+                    
+                    const size = Math.random() * 100 + 50;
+                    const duration = Math.random() * 20 + 20;
+                    const delay = Math.random() * 10;
+                    const color = colors[Math.floor(Math.random() * colors.length)];
+                    
+                    shape.style.width = `${size}px`;
+                    shape.style.height = `${size}px`;
+                    shape.style.background = color;
+                    shape.style.left = `${Math.random() * 100}%`;
+                    shape.style.top = `${Math.random() * 100}%`;
+                    shape.style.animation = `float ${duration}s linear ${delay}s infinite`;
+                    shape.style.borderRadius = Math.random() > 0.5 ? '50%' : '20%';
+                    
+                    section.appendChild(shape);
+                }
             });
         }
-        
-        // Start connections
-        setInterval(createConnection, 3000);
+
+        // Add floating shapes style
+        const floatingStyles = document.createElement('style');
+        floatingStyles.textContent = `
+            .floating-shape {
+                position: absolute;
+                opacity: 0.3;
+                filter: blur(30px);
+                z-index: 0;
+                pointer-events: none;
+            }
+            
+            @keyframes float {
+                0% {
+                    transform: translate(0, 0) rotate(0deg);
+                }
+                25% {
+                    transform: translate(20px, 20px) rotate(5deg);
+                }
+                50% {
+                    transform: translate(0, 40px) rotate(0deg);
+                }
+                75% {
+                    transform: translate(-20px, 20px) rotate(-5deg);
+                }
+                100% {
+                    transform: translate(0, 0) rotate(0deg);
+                }
+            }
+        `;
+        document.head.appendChild(floatingStyles);
+
+        // Initialize floating shapes
+        createFloatingShapes();
+
+        // Recreate shapes on resize
+        window.addEventListener('resize', createFloatingShapes);
     </script>
 </body>
 </html>
