@@ -3,10 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Feedback Analyzer | CreativeFlow Pro</title>
+    <title>CreativeFlow Pro - Platform Manajemen Proyek & Klien untuk Industri Kreatif</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* ========== GLOBAL STYLES ========== */
         :root {
             --primary: #6e45e2;
             --primary-light: #8d6bec;
@@ -78,6 +77,7 @@
             overflow-x: hidden;
             line-height: 1.7;
             font-weight: 400;
+            padding-top: 70px;
         }
 
         ::selection {
@@ -85,51 +85,144 @@
             color: white;
         }
 
-        /* ========== LAYOUT COMPONENTS ========== */
-        .container {
-            width: 92%;
-            max-width: 1400px;
+        /* ========== HEADER & NAVIGATION ========== */
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 90%;
+            max-width: 1200px;
             margin: 0 auto;
-            padding: 0 20px;
         }
 
-        .section {
-            padding: 120px 0;
-            position: relative;
-        }
-
-        .section-title {
-            font-size: 2.5rem;
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.5rem;
             font-weight: 700;
+            color: white;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            margin-right: 10px;
+            font-size: 1.8rem;
+        }
+
+        /* Desktop Navigation */
+        .desktop-nav {
+            display: flex;
+        }
+
+        .desktop-nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        .desktop-nav li {
+            margin-left: 2rem;
+        }
+
+        .desktop-nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .desktop-nav a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Mobile Navigation */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.8rem;
+            cursor: pointer;
+        }
+
+        .mobile-nav {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 80%;
+            max-width: 300px;
+            height: 100vh;
+            background: linear-gradient(135deg, var(--primary-dark), var(--secondary-dark));
+            z-index: 1001;
+            transition: right 0.3s ease;
+            padding: 2rem;
+            box-shadow: -5px 0 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .mobile-nav.active {
+            right: 0;
+        }
+
+        .mobile-nav-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .mobile-nav ul {
+            list-style: none;
+        }
+
+        .mobile-nav li {
             margin-bottom: 1.5rem;
-            line-height: 1.2;
-            position: relative;
-            display: inline-block;
         }
 
-        .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
+        .mobile-nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.2rem;
+            padding: 0.5rem 0;
+            display: block;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.8rem;
+            cursor: pointer;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
             left: 0;
-            width: 60px;
-            height: 4px;
-            background: var(--gradient-primary);
-            border-radius: 2px;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
         }
 
-        .section-subtitle {
-            font-size: 1.1rem;
-            color: var(--dark-lighter);
-            max-width: 700px;
-            margin-bottom: 3rem;
-        }
-
-        .text-gradient {
-            background: var(--gradient-primary);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+        .overlay.active {
+            opacity: 1;
+            visibility: visible;
         }
 
         /* ========== BUTTONS ========== */
@@ -180,764 +273,1308 @@
             box-shadow: 0 8px 25px rgba(255, 126, 95, 0.3);
         }
 
-        /* ========== HEADER ========== */
-        header {
-            position: fixed;
-            width: 100%;
-            top: 0;
-            left: 0;
-            z-index: 1000;
-            padding: 20px 0;
-            transition: all 0.4s ease;
-            backdrop-filter: blur(10px);
-            background: rgba(255, 255, 255, 0.9);
-            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.05);
-        }
-
-        header.scrolled {
-            padding: 15px 0;
-            background: rgba(255, 255, 255, 0.98);
-            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.1);
-        }
-
-        .header-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: var(--dark);
-            text-decoration: none;
-        }
-
-        .logo-icon {
-            margin-right: 10px;
-            color: var(--primary);
-            font-size: 1.8rem;
-        }
-
         /* ========== HERO SECTION ========== */
         .hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
+            padding: 8rem 0 4rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
             position: relative;
             overflow: hidden;
-            background: var(--gradient-dark);
-            color: white;
-            padding-top: 100px;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path fill="rgba(255,255,255,0.05)" d="M0,0 L100,0 L100,100 Q50,80 0,100 Z"></path></svg>');
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
+            background-position: bottom;
         }
 
         .hero-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
             position: relative;
-            z-index: 2;
-            max-width: 600px;
+            z-index: 1;
         }
 
-        .hero-title {
+        .hero h1 {
             font-size: 3.5rem;
-            font-weight: 700;
             margin-bottom: 1.5rem;
             line-height: 1.2;
-            background: linear-gradient(to right, white, var(--secondary-light));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: textGradient 8s infinite alternate;
         }
 
-        .hero-subtitle {
+        .hero p {
             font-size: 1.2rem;
-            opacity: 0.9;
-            margin-bottom: 2.5rem;
-            font-weight: 300;
+            max-width: 700px;
+            margin-bottom: 2rem;
         }
 
         .hero-buttons {
             display: flex;
-            gap: 15px;
-            margin-top: 2rem;
+            gap: 1rem;
+            margin-bottom: 2rem;
         }
 
-        /* ========== AI VISUALIZATION ========== */
-        .ai-visualization {
-            position: absolute;
-            right: -100px;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 800px;
-            height: 800px;
-            z-index: 1;
-        }
-
-        .ai-core {
-            position: absolute;
+        .hero-image {
+            max-width: 800px;
             width: 100%;
-            height: 100%;
-            background: radial-gradient(circle, var(--primary), transparent 60%);
-            border-radius: 50%;
-            filter: blur(100px);
-            opacity: 0.4;
-            animation: pulse 8s infinite alternate;
-        }
-
-        .data-node {
-            position: absolute;
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.8rem;
-            color: white;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
-            transform: translate(-50%, -50%);
-            animation: float 6s infinite ease-in-out;
-            z-index: 2;
+            margin-top: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
             transition: all 0.5s ease;
         }
 
-        .data-node:hover {
-            transform: translate(-50%, -50%) scale(1.1);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        .hero-image:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
         }
 
-        .connection-line {
-            position: absolute;
-            height: 2px;
-            background: linear-gradient(to right, rgba(255,255,255,0), rgba(255,255,255,0.5), rgba(255,255,255,0));
-            transform-origin: left center;
-            z-index: 1;
+        /* ========== USP SECTION ========== */
+        .usp-section {
+            padding: 5rem 0;
+            background-color: white;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--dark);
+            margin-bottom: 1rem;
+        }
+
+        .section-title p {
+            color: #666;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .usp-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .usp-card {
+            background-color: var(--light);
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .usp-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .usp-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+
+        .usp-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+
+        .usp-card p {
+            color: #666;
         }
 
         /* ========== FEATURES SECTION ========== */
         .features-section {
-            position: relative;
-            overflow: hidden;
+            padding: 5rem 0;
+            background-color: #f5f7fa;
         }
 
-        .features-grid {
+        .feature-tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .feature-tab {
+            padding: 0.8rem 1.5rem;
+            margin: 0 0.5rem 1rem;
+            background-color: transparent;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            color: var(--dark);
+        }
+
+        .feature-tab.active {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .feature-tab:hover:not(.active) {
+            background-color: rgba(110, 69, 226, 0.1);
+        }
+
+        .feature-content {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .feature-content.active {
+            display: block;
+        }
+
+        .feature-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 30px;
-            margin-top: 50px;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
         }
 
         .feature-card {
-            background: white;
-            border-radius: 20px;
-            padding: 40px;
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.05);
-            transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
-            position: relative;
-            overflow: hidden;
-            z-index: 1;
-            border: 1px solid rgba(0, 0, 0, 0.03);
+            background-color: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
         }
 
-        .feature-card::before {
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+        }
+
+        .feature-card h3 span {
+            margin-right: 10px;
+            color: var(--primary);
+        }
+
+        /* ========== DEMO SECTION ========== */
+        .demo-section {
+            padding: 5rem 0;
+            background: linear-gradient(135deg, var(--dark), #3a3d5e);
+            color: white;
+            text-align: center;
+        }
+
+        .demo-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .demo-video {
+            width: 100%;
+            height: 500px;
+            background-color: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            margin: 2rem 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .demo-video::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, rgba(110, 69, 226, 0.03), rgba(136, 211, 206, 0.03));
-            z-index: -1;
+            background: url('https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') center/cover;
+            filter: brightness(0.7);
         }
 
-        .feature-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
-        }
-
-        .feature-icon {
-            width: 70px;
-            height: 70px;
-            border-radius: 18px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.8rem;
-            margin-bottom: 25px;
-            color: white;
-            background: var(--gradient-primary);
-            box-shadow: 0 10px 20px rgba(110, 69, 226, 0.2);
-        }
-
-        .feature-title {
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin-bottom: 15px;
-            color: var(--dark);
-        }
-
-        .feature-description {
-            color: var(--dark-lighter);
-            margin-bottom: 20px;
-        }
-
-        /* ========== HOW IT WORKS SECTION ========== */
-        .how-it-works {
-            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
-        }
-
-        .steps-container {
-            position: relative;
-            margin-top: 60px;
-        }
-
-        .step-line {
-            position: absolute;
-            left: 40px;
-            top: 0;
-            bottom: 0;
-            width: 4px;
-            background: linear-gradient(to bottom, var(--primary), var(--secondary));
-            border-radius: 2px;
-            z-index: 1;
-        }
-
-        .step {
-            display: flex;
-            margin-bottom: 60px;
-            position: relative;
-            z-index: 2;
-        }
-
-        .step-number {
+        .play-button {
             width: 80px;
             height: 80px;
+            background-color: var(--accent);
             border-radius: 50%;
-            background: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            z-index: 1;
+            transition: all 0.3s ease;
+        }
+
+        .play-button:hover {
+            transform: scale(1.1);
+        }
+
+        .play-icon {
+            color: white;
+            font-size: 2rem;
+            margin-left: 5px;
+        }
+
+        /* ========== PRICING SECTION ========== */
+        .pricing-section {
+            padding: 5rem 0;
+            background-color: white;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .pricing-card {
+            background-color: var(--light);
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .pricing-card.popular {
+            border: 2px solid var(--primary);
+            transform: translateY(-10px);
+        }
+
+        .popular-badge {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background-color: var(--primary);
+            color: white;
+            padding: 0.3rem 1rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+            border-bottom-left-radius: 10px;
+        }
+
+        .pricing-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+
+        .price {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+        }
+
+        .price span {
+            font-size: 1rem;
+            color: #666;
+            font-weight: 400;
+        }
+
+        .pricing-features {
+            margin-bottom: 2rem;
+        }
+
+        .pricing-features li {
+            list-style: none;
+            margin-bottom: 0.8rem;
             display: flex;
             align-items: center;
-            justify-content: center;
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: var(--primary);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            flex-shrink: 0;
-            margin-right: 40px;
-            border: 4px solid white;
         }
 
-        .step-content {
-            background: white;
-            border-radius: 20px;
-            padding: 30px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-            flex-grow: 1;
-        }
-
-        .step-title {
-            font-size: 1.4rem;
-            font-weight: 600;
-            margin-bottom: 15px;
-            color: var(--dark);
+        .pricing-features li::before {
+            content: '✓';
+            color: var(--success);
+            margin-right: 10px;
+            font-weight: bold;
         }
 
         /* ========== TESTIMONIALS ========== */
         .testimonials-section {
-            position: relative;
+            padding: 5rem 0;
+            background-color: #f5f7fa;
         }
 
-        .testimonials-slider {
-            margin-top: 60px;
+        .testimonial-slider {
+            max-width: 800px;
+            margin: 0 auto;
             position: relative;
         }
 
         .testimonial {
-            background: white;
-            border-radius: 20px;
-            padding: 40px;
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.05);
-            margin: 0 15px;
-            position: relative;
-            border: 1px solid rgba(0, 0, 0, 0.03);
+            background-color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            text-align: center;
+            display: none;
+            animation: fadeIn 0.5s ease;
         }
 
-        .testimonial-quote {
-            font-size: 1.1rem;
+        .testimonial.active {
+            display: block;
+        }
+
+        .testimonial-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 1rem;
+            border: 3px solid var(--primary);
+        }
+
+        .testimonial-text {
             font-style: italic;
-            color: var(--dark-lighter);
-            margin-bottom: 30px;
-            position: relative;
-        }
-
-        .testimonial-quote::before {
-            content: '"';
-            position: absolute;
-            top: -20px;
-            left: -15px;
-            font-size: 4rem;
-            color: rgba(110, 69, 226, 0.1);
-            font-family: serif;
-            line-height: 1;
-            z-index: 0;
+            margin-bottom: 1.5rem;
+            color: #555;
         }
 
         .testimonial-author {
-            display: flex;
-            align-items: center;
-        }
-
-        .author-avatar {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            object-fit: cover;
-            margin-right: 20px;
-            border: 3px solid var(--primary-light);
-        }
-
-        .author-info h4 {
-            font-size: 1.1rem;
-            font-weight: 600;
+            font-weight: 700;
             color: var(--dark);
-            margin-bottom: 5px;
         }
 
-        .author-info p {
-            color: var(--dark-lighter);
+        .testimonial-role {
+            color: #666;
             font-size: 0.9rem;
+        }
+
+        .slider-controls {
+            display: flex;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+
+        .slider-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: #ccc;
+            margin: 0 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .slider-dot.active {
+            background-color: var(--primary);
+            transform: scale(1.2);
         }
 
         /* ========== CTA SECTION ========== */
         .cta-section {
-            background: var(--gradient-dark);
+            padding: 5rem 0;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: white;
             text-align: center;
-            position: relative;
-            overflow: hidden;
         }
 
-        .cta-section::before {
-            content: '';
-            position: absolute;
-            top: -100px;
-            right: -100px;
-            width: 300px;
-            height: 300px;
-            background: radial-gradient(circle, var(--primary), transparent 70%);
-            border-radius: 50%;
-            filter: blur(80px);
-            opacity: 0.3;
+        .cta-container {
+            max-width: 700px;
+            margin: 0 auto;
         }
 
-        .cta-section::after {
-            content: '';
-            position: absolute;
-            bottom: -100px;
-            left: -100px;
-            width: 300px;
-            height: 300px;
-            background: radial-gradient(circle, var(--secondary), transparent 70%);
-            border-radius: 50%;
-            filter: blur(80px);
-            opacity: 0.3;
-        }
-
-        .cta-title {
+        .cta-section h2 {
             font-size: 2.5rem;
-            font-weight: 700;
             margin-bottom: 1.5rem;
         }
 
-        .cta-subtitle {
+        .cta-section p {
+            margin-bottom: 2rem;
             font-size: 1.1rem;
-            opacity: 0.9;
-            max-width: 700px;
-            margin: 0 auto 2.5rem;
+        }
+
+        .cta-form {
+            display: flex;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .cta-input {
+            flex: 1;
+            padding: 0.8rem 1rem;
+            border: none;
+            border-radius: 25px 0 0 25px;
+            font-size: 1rem;
+        }
+
+        .cta-submit {
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            padding: 0 1.5rem;
+            border-radius: 0 25px 25px 0;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .cta-submit:hover {
+            background-color: #ff6a4f;
         }
 
         /* ========== FOOTER ========== */
         footer {
-            background: var(--dark);
+            background-color: var(--dark);
             color: white;
-            padding: 80px 0 30px;
+            padding: 4rem 0 2rem;
         }
 
         .footer-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 40px;
-            margin-bottom: 60px;
+            gap: 2rem;
+            margin-bottom: 3rem;
         }
 
-        .footer-logo {
-            font-size: 1.8rem;
-            font-weight: 700;
-            margin-bottom: 20px;
-            display: inline-block;
+        .footer-column h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
         }
 
-        .footer-description {
-            opacity: 0.7;
-            margin-bottom: 20px;
-            line-height: 1.6;
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background-color: var(--accent);
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-column ul li a {
+            color: #bbb;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-column ul li a:hover {
+            color: white;
+            padding-left: 5px;
         }
 
         .social-links {
             display: flex;
-            gap: 15px;
+            gap: 1rem;
+            margin-top: 1rem;
         }
 
         .social-link {
             width: 40px;
             height: 40px;
             border-radius: 50%;
-            background: rgba(255, 255, 255, 0.1);
+            background-color: rgba(255, 255, 255, 0.1);
             display: flex;
-            align-items: center;
             justify-content: center;
+            align-items: center;
             transition: all 0.3s ease;
         }
 
         .social-link:hover {
-            background: var(--primary);
+            background-color: var(--accent);
             transform: translateY(-3px);
-        }
-
-        .footer-column h3 {
-            font-size: 1.2rem;
-            font-weight: 600;
-            margin-bottom: 25px;
-            position: relative;
-        }
-
-        .footer-column h3::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 0;
-            width: 40px;
-            height: 3px;
-            background: var(--gradient-primary);
-            border-radius: 2px;
-        }
-
-        .footer-links {
-            list-style: none;
-        }
-
-        .footer-links li {
-            margin-bottom: 12px;
-        }
-
-        .footer-links a {
-            color: rgba(255, 255, 255, 0.7);
-            text-decoration: none;
-            transition: all 0.3s ease;
-        }
-
-        .footer-links a:hover {
-            color: white;
-            padding-left: 5px;
         }
 
         .footer-bottom {
             text-align: center;
-            padding-top: 30px;
+            padding-top: 2rem;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
-            color: rgba(255, 255, 255, 0.5);
+            color: #bbb;
             font-size: 0.9rem;
         }
 
-        /* ========== ANIMATIONS ========== */
+        /* ========== RESPONSIVE STYLES ========== */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+            }
+            
+            .desktop-nav {
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 0.5rem;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero-buttons {
+                flex-direction: column;
+                width: 100%;
+            }
+            
+            .hero-buttons button {
+                width: 100%;
+            }
+            
+            .cta-form {
+                flex-direction: column;
+            }
+            
+            .cta-input {
+                border-radius: 25px;
+                margin-bottom: 1rem;
+            }
+            
+            .cta-submit {
+                border-radius: 25px;
+                padding: 0.8rem;
+            }
+            
+            .demo-video {
+                height: 300px;
+            }
+        }
+
+        /* ========== ANIMATION CLASSES ========== */
+        .fade-in {
+            animation: fadeIn 1s ease;
+        }
+        
+        .slide-up {
+            animation: slideUp 1s ease;
+        }
+        
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* ========== FLOATING ELEMENTS ========== */
+        .floating-elements {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            overflow: hidden;
+            z-index: 0;
+        }
+        
+        .floating-element {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.1;
+            animation: float 15s infinite linear;
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+            100% { transform: translateY(0) rotate(360deg); }
+        }
+        
+        /* ========== TOOLTIP ========== */
+        .tooltip {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .tooltip .tooltip-text {
+            visibility: hidden;
+            width: 200px;
+            background-color: var(--dark);
+            color: white;
+            text-align: center;
+            border-radius: 6px;
+            padding: 0.5rem;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 0.9rem;
+        }
+        
+        .tooltip:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
+        
+        /* ========== UNIQUE FEATURES ========== */
+        .ai-badge {
+            position: relative;
+            display: inline-block;
+            margin-left: 10px;
+        }
+        
+        .ai-badge::after {
+            content: 'AI POWERED';
+            position: absolute;
+            top: -10px;
+            right: -70px;
+            background-color: var(--accent);
+            color: white;
+            font-size: 0.7rem;
+            padding: 0.2rem 0.5rem;
+            border-radius: 10px;
+            font-weight: bold;
+        }
+        
+        /* ========== INTERACTIVE DEMO WIDGET ========== */
+        .demo-widget {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: var(--primary);
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            z-index: 999;
+            transition: all 0.3s ease;
+        }
+        
+        .demo-widget:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .demo-widget i {
+            font-size: 1.5rem;
+            animation: pulse 2s infinite;
+        }
+        
         @keyframes pulse {
-            0% { transform: scale(1); opacity: 0.4; }
-            100% { transform: scale(1.1); opacity: 0.6; }
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        
+        /* ========== 3D CARD EFFECT ========== */
+        .card-3d {
+            transform-style: preserve-3d;
+            transition: all 0.5s ease;
+        }
+        
+        .card-3d:hover {
+            transform: rotateY(10deg) rotateX(5deg) translateY(-10px);
+        }
+
+        /* ========== AI FEEDBACK ANALYZER PAGE STYLES ========== */
+        .feature-hero {
+            padding: 10rem 0 5rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .feature-hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            animation: fadeInUp 1s ease;
+        }
+
+        .feature-hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            animation: fadeInUp 1s ease 0.2s forwards;
+            opacity: 0;
+        }
+
+        /* AI Visualization */
+        .ai-visualization {
+            position: relative;
+            height: 500px;
+            margin: 5rem auto;
+            perspective: 1000px;
+        }
+
+        .ai-core {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, var(--primary), transparent 70%);
+            border-radius: 50%;
+            filter: blur(20px);
+            opacity: 0.7;
+            animation: pulse 4s infinite alternate;
+        }
+
+        .data-node {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            animation: float 6s infinite ease-in-out;
+        }
+
+        .data-node:nth-child(1) {
+            top: 20%;
+            left: 20%;
+            background-color: var(--accent);
+        }
+
+        .data-node:nth-child(2) {
+            top: 20%;
+            right: 20%;
+            animation-delay: 0.5s;
+            background-color: var(--secondary);
+        }
+
+        .data-node:nth-child(3) {
+            bottom: 20%;
+            left: 20%;
+            animation-delay: 1s;
+            background-color: #ffd166;
+        }
+
+        .data-node:nth-child(4) {
+            bottom: 20%;
+            right: 20%;
+            animation-delay: 1.5s;
+            background-color: #06d6a0;
+        }
+
+        .data-node i {
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        .connection-line {
+            position: absolute;
+            background: rgba(255,255,255,0.3);
+            height: 2px;
+            transform-origin: left center;
+            animation: connect 4s infinite;
+        }
+
+        /* Feature Details */
+        .feature-details {
+            padding: 5rem 0;
+            background-color: white;
+        }
+
+        .detail-card {
+            background: var(--light);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            transform: translateY(50px);
+            opacity: 0;
+            transition: all 0.6s ease;
+        }
+
+        .detail-card.visible {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .detail-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        /* Use Cases */
+        .use-cases {
+            padding: 5rem 0;
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+        }
+
+        .case-study {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 1rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transform: scale(0.95);
+            transition: all 0.4s ease;
+        }
+
+        .case-study:hover {
+            transform: scale(1);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            100% {
+                transform: scale(1.1);
+            }
         }
 
         @keyframes float {
-            0%, 100% { transform: translate(-50%, -50%) translateY(0); }
-            50% { transform: translate(-50%, -50%) translateY(-20px); }
-        }
-
-        @keyframes textGradient {
-            0% { background-position: 0% 50%; }
-            100% { background-position: 100% 50%; }
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* ========== RESPONSIVE ========== */
-        @media (max-width: 1200px) {
-            .ai-visualization {
-                width: 600px;
-                height: 600px;
-                right: -150px;
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-20px);
             }
         }
 
-        @media (max-width: 992px) {
-            .hero {
-                padding: 120px 0 80px;
-                text-align: center;
+        @keyframes connect {
+            0% {
+                width: 0;
+                opacity: 0;
             }
-
-            .hero-content {
-                max-width: 100%;
-                margin-bottom: 60px;
+            30%, 70% {
+                width: 100px;
+                opacity: 0.5;
             }
-
-            .hero-title {
-                font-size: 2.8rem;
-            }
-
-            .hero-buttons {
-                justify-content: center;
-            }
-
-            .ai-visualization {
-                position: relative;
-                right: auto;
-                top: auto;
-                transform: none;
-                width: 100%;
-                height: 400px;
-                margin: 0 auto;
-            }
-
-            .section {
-                padding: 80px 0;
-            }
-
-            .section-title {
-                font-size: 2rem;
+            100% {
+                width: 0;
+                opacity: 0;
             }
         }
 
+        /* Responsive for AI Page */
         @media (max-width: 768px) {
-            .hero-title {
-                font-size: 2.2rem;
+            .feature-hero h1 {
+                font-size: 2.5rem;
             }
-
-            .hero-subtitle {
-                font-size: 1rem;
+            
+            .ai-visualization {
+                height: 300px;
             }
-
-            .hero-buttons {
-                flex-direction: column;
-                gap: 15px;
-            }
-
-            .btn {
-                width: 100%;
-            }
-
-            .features-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .step {
-                flex-direction: column;
-            }
-
-            .step-number {
-                margin-right: 0;
-                margin-bottom: 20px;
-            }
-
-            .step-line {
-                left: 40px;
-                top: 40px;
-                bottom: 40px;
-            }
-        }
-
-        @media (max-width: 576px) {
-            .hero-title {
-                font-size: 1.8rem;
-            }
-
-            .section-title {
-                font-size: 1.8rem;
-            }
-
-            .feature-card {
-                padding: 30px;
-            }
-
-            .testimonial {
-                padding: 30px 20px;
+            
+            .data-node {
+                width: 40px;
+                height: 40px;
             }
         }
     </style>
 </head>
 <body>
-    <!-- ========== HEADER ========== -->
-    <header id="header">
-        <div class="container">
-            <div class="header-container">
-                <a href="#" class="logo">
-                    <i class="fas fa-magic logo-icon"></i>
-                    <span>CreativeFlow Pro</span>
-                </a>
-                <nav>
-                    <ul>
-                        <li><a href="#features">Features</a></li>
-                        <li><a href="#how-it-works">How It Works</a></li>
-                        <li><a href="#testimonials">Testimonials</a></li>
-                        <li><a href="#pricing">Pricing</a></li>
-                    </ul>
-                </nav>
-                <a href="#" class="btn btn-primary">Get Started</a>
+    <!-- Floating Elements Background -->
+    <div class="floating-elements">
+        <div class="floating-element" style="width: 100px; height: 100px; background-color: var(--primary); top: 10%; left: 5%; animation-delay: 0s;"></div>
+        <div class="floating-element" style="width: 150px; height: 150px; background-color: var(--secondary); top: 60%; left: 80%; animation-delay: 2s;"></div>
+        <div class="floating-element" style="width: 80px; height: 80px; background-color: var(--accent); top: 30%; left: 70%; animation-delay: 4s;"></div>
+        <div class="floating-element" style="width: 120px; height: 120px; background-color: var(--primary); top: 70%; left: 20%; animation-delay: 6s;"></div>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <a href="#" class="logo">
+                            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-magic"></i>
+                </div>
+                <span>CreativeFlow Pro</span>
             </div>
+
+            <!-- Desktop Navigation -->
+            <nav class="desktop-nav">
+                <ul>
+                    <li><a href="#features">Fitur</a></li>
+                    <li><a href="#usp">Keunggulan</a></li>
+                    <li><a href="#pricing">Harga</a></li>
+                    <li><a href="#testimonials">Testimoni</a></li>
+                    <li><a href="#demo">Demo</a></li>
+                </ul>
+            </nav>
+
+            <!-- Mobile Menu Button -->
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
         </div>
     </header>
 
-    <!-- ========== HERO SECTION ========== -->
+    <!-- Mobile Navigation -->
+    <div class="mobile-nav" id="mobileNav">
+        <div class="mobile-nav-header">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-magic"></i>
+                </div>
+                <span>CreativeFlow Pro</span>
+            </div>
+            <button class="close-btn" id="closeBtn">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#features">Fitur</a></li>
+                <li><a href="#usp">Keunggulan</a></li>
+                <li><a href="#pricing">Harga</a></li>
+                <li><a href="#testimonials">Testimoni</a></li>
+                <li><a href="#demo">Demo</a></li>
+                <li><a href="#" class="btn btn-primary">Coba Gratis</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <!-- Overlay -->
+    <div class="overlay" id="overlay"></div>
+
+    <!-- Hero Section -->
     <section class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <h1 class="hero-title">AI-Powered Feedback Analysis</h1>
-                <p class="hero-subtitle">Our advanced neural networks analyze client feedback to reveal hidden insights and help you understand their true preferences with 92% accuracy.</p>
-                <div class="hero-buttons">
-                    <a href="#" class="btn btn-primary">Start Free Trial</a>
-                    <a href="#" class="btn btn-secondary">See Demo</a>
-                </div>
+        <div class="container hero-content slide-up">
+            <h1>Kelola Proyek Kreatif dengan Lebih Mudah</h1>
+            <p>Platform all-in-one untuk freelancer dan tim kreatif yang ingin mengelola proyek, berkolaborasi dengan klien, dan menumbuhkan bisnis mereka.</p>
+            <div class="hero-buttons">
+                <button class="cta-button">Mulai 14 Hari Gratis</button>
+                <button class="secondary-button">Lihat Demo</button>
             </div>
-            
-            <div class="ai-visualization">
-                <div class="ai-core"></div>
-                <div class="data-node" style="top: 30%; left: 30%; background: var(--accent);">
-                    <i class="fas fa-comment-dots"></i>
-                </div>
-                <div class="data-node" style="top: 30%; left: 70%; background: var(--secondary); animation-delay: 0.5s;">
-                    <i class="fas fa-brain"></i>
-                </div>
-                <div class="data-node" style="top: 70%; left: 30%; background: #ffd166; animation-delay: 1s;">
-                    <i class="fas fa-chart-network"></i>
-                </div>
-                <div class="data-node" style="top: 70%; left: 70%; background: #06d6a0; animation-delay: 1.5s;">
-                    <i class="fas fa-lightbulb"></i>
-                </div>
-            </div>
+            <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="CreativeFlow Pro Dashboard" class="hero-image card-3d">
         </div>
     </section>
 
-    <!-- ========== FEATURES SECTION ========== -->
-    <section class="section features-section" id="features">
+    <!-- USP Section -->
+    <section class="usp-section" id="usp">
         <div class="container">
-            <h2 class="section-title">Powerful <span class="text-gradient">Features</span></h2>
-            <p class="section-subtitle">Our AI Feedback Analyzer provides deep insights that help you improve your creative work based on real client feedback patterns.</p>
-            
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-comments"></i>
+            <div class="section-title">
+                <h2>Apa yang Membuat Kami Berbeda?</h2>
+                <p>CreativeFlow Pro dirancang khusus untuk memenuhi kebutuhan unik profesional kreatif dengan fitur-fitur inovatif yang tidak Anda temukan di tempat lain.</p>
+            </div>
+            <div class="usp-grid">
+                <div class="usp-card">
+                    <div class="usp-icon">
+                        <i class="fas fa-brain"></i>
                     </div>
-                    <h3 class="feature-title">Sentiment Analysis</h3>
-                    <p class="feature-description">Detect emotions and tone in client feedback to understand satisfaction levels and emotional responses to your work.</p>
-                    <a href="#" class="btn btn-accent">Learn More</a>
+                    <h3>AI Feedback Analyzer <span class="ai-badge"></span></h3>
+                    <p>Teknologi AI kami menganalisis feedback klien untuk mengidentifikasi pola dan membantu Anda memahami kebutuhan mereka lebih dalam.</p>
                 </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
+                <div class="usp-card">
+                    <div class="usp-icon">
+                        <i class="fas fa-palette"></i>
+                    </div>
+                    <h3>Visual Collaboration</h3>
+                    <p>Anotasi langsung pada desain, video, dan mockup website dengan alat proofing terintegrasi yang dibuat khusus untuk kreatif.</p>
+                </div>
+                <div class="usp-card">
+                    <div class="usp-icon">
+                        <i class="fas fa-history"></i>
+                    </div>
+                    <h3>Version History Pro</h3>
+                    <p>Setiap perubahan pada file kreatif Anda dilacak dengan timeline visual, memungkinkan Anda kembali ke versi sebelumnya dengan satu klik.</p>
+                </div>
+                <div class="usp-card">
+                    <div class="usp-icon">
                         <i class="fas fa-project-diagram"></i>
                     </div>
-                    <h3 class="feature-title">Pattern Recognition</h3>
-                    <p class="feature-description">Identify recurring themes and common requests across multiple projects to improve your creative process.</p>
-                    <a href="#" class="btn btn-accent">Learn More</a>
+                    <h3>Client Portal Customizable</h3>
+                    <p>Setiap klien mendapatkan portal khusus dengan branding Anda, menciptakan pengalaman profesional yang konsisten.</p>
                 </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-robot"></i>
+                <div class="usp-card">
+                    <div class="usp-icon">
+                        <i class="fas fa-lightbulb"></i>
                     </div>
-                    <h3 class="feature-title">Smart Recommendations</h3>
-                    <p class="feature-description">Get AI-powered suggestions for improvements based on analysis of thousands of successful creative projects.</p>
-                    <a href="#" class="btn btn-accent">Learn More</a>
+                    <h3>Creative Brief Generator</h3>
+                    <p>Alat berbasis AI yang membantu Anda membuat creative brief profesional hanya dalam beberapa menit.</p>
+                </div>
+                <div class="usp-card">
+                    <div class="usp-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>Portfolio Analytics</h3>
+                    <p>Lacak bagaimana klien berinteraksi dengan portofolio Anda dan optimalkan untuk lebih banyak proyek.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- ========== HOW IT WORKS SECTION ========== -->
-    <section class="section how-it-works" id="how-it-works">
+    <!-- Features Section -->
+    <section class="features-section" id="features">
         <div class="container">
-            <h2 class="section-title">How It <span class="text-gradient">Works</span></h2>
-            <p class="section-subtitle">Our AI analyzes your client feedback in three simple steps to deliver actionable insights.</p>
+            <div class="section-title">
+                <h2>Fitur Lengkap untuk Kebutuhan Kreatif Anda</h2>
+                <p>Semua alat yang Anda butuhkan untuk mengelola proyek kreatif dari awal hingga akhir dalam satu platform terintegrasi.</p>
+            </div>
             
-            <div class="steps-container">
-                <div class="step-line"></div>
-                
-                <div class="step">
-                    <div class="step-number">1</div>
-                    <div class="step-content">
-                        <h3 class="step-title">Collect Feedback</h3>
-                        <p>Our system automatically gathers all client comments, emails, and notes from your CreativeFlow Pro projects into one centralized location.</p>
+            <div class="feature-tabs">
+                <button class="feature-tab active" onclick="showFeature('project-management')">Manajemen Proyek</button>
+                <button class="feature-tab" onclick="showFeature('client-collab')">Kolaborasi Klien</button>
+                <button class="feature-tab" onclick="showFeature('creative-tools')">Alat Kreatif</button>
+                <button class="feature-tab" onclick="showFeature('business')">Bisnis & Keuangan</button>
+            </div>
+            
+            <div id="project-management" class="feature-content active">
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h3><i class="fas fa-columns"></i> Papan Kanban Kustom</h3>
+                        <p>Visualisasikan alur kerja dengan papan Kanban yang sepenuhnya dapat disesuaikan untuk proses kreatif Anda.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3><i class="fas fa-tasks"></i> Manajemen Tugas Cerdas</h3>
+                        <p>Buat tugas, sub-tugas, tetapkan tenggat waktu, dan delegasikan dengan mudah ke anggota tim.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3><i class="fas fa-calendar-alt"></i> Timeline Interaktif</h3>
+                        <p>Lihat jadwal proyek Anda dalam timeline visual dengan milestone yang dapat disesuaikan.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3><i class="fas fa-users"></i> Manajemen Tim</h3>
+                        <p>Undang anggota tim, atur peran dan izin, dan kolaborasi dalam ruang kerja terpusat.</p>
                     </div>
                 </div>
-                
-                <div class="step">
-                    <div class="step-number">2</div>
-                    <div class="step-content">
-                        <h3 class="step-title">AI Processing</h3>
-                        <p>Advanced natural language processing algorithms analyze the text for sentiment, keywords, and hidden patterns that humans might miss.</p>
+            </div>
+            
+            <div id="client-collab" class="feature-content">
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h3><i class="fas fa-user-tie"></i> Client Portal</h3>
+                        <p>Portal khusus untuk setiap klien dengan branding Anda, berisi semua proyek dan komunikasi.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3><i class="fas fa-comment-dots"></i> Live Feedback</h3>
+                        <p>Klien dapat memberikan komentar langsung pada desain, video, atau mockup website Anda.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3><i class="fas fa-check-circle"></i> Approval System</h3>
+                        <p>Sistem persetujuan terstruktur untuk milestone penting dengan tanda tangan digital.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3><i class="fas fa-database"></i> Client Database</h3>
+                        <p>CRM sederhana untuk melacak semua interaksi dan proyek sebelumnya dengan setiap klien.</p>
                     </div>
                 </div>
-                
-                <div class="step">
-                    <div class="step-number">3</div>
-                    <div class="step-content">
-                        <h3 class="step-title">Deliver Insights</h3>
-                        <p>You receive clear visual reports highlighting key findings and actionable recommendations to improve your creative work.</p>
+            </div>
+            
+            <div id="creative-tools" class="feature-content">
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h3><i class="fas fa-drafting-compass"></i> Visual Proofing</h3>
+                        <p>Alat anotasi untuk memberikan feedback langsung pada karya kreatif dalam berbagai format.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3><i class="fas fa-code-branch"></i> Version Control</h3>
+                        <p>Lacak semua versi file kreatif Anda dengan timeline visual dan komparasi side-by-side.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3><i class="fas fa-briefcase"></i> Portfolio Builder</h3>
+                        <p>Buat portofolio profesional langsung dari proyek yang telah selesai dengan template cantik.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3><i class="fas fa-lightbulb"></i> Creative Brief Tool</h3>
+                        <p>Generator brief kreatif berbasis AI yang membantu menyusun panduan proyek yang komprehensif.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="business" class="feature-content">
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h3><i class="fas fa-file-contract"></i> Proposal & Kontrak</h3>
+                        <p>Template profesional yang dapat disesuaikan untuk proposal dan kontrak layanan kreatif.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3><i class="fas fa-clock"></i> Time Tracking</h3>
+                        <p>Lacak waktu yang dihabiskan untuk setiap proyek dan tugas dengan timer terintegrasi.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3><i class="fas fa-receipt"></i> Invoicing Otomatis</h3>
+                        <p>Buat faktur profesional berdasarkan jam kerja atau harga proyek tetap dengan beberapa klik.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3><i class="fas fa-chart-pie"></i> Business Reports</h3>
+                        <p>Laporan kinerja bisnis dan profitabilitas proyek untuk membantu Anda membuat keputusan.</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- ========== TESTIMONIALS SECTION ========== -->
-    <section class="section testimonials-section" id="testimonials">
+    <!-- Demo Section -->
+    <section class="demo-section" id="demo">
+        <div class="container demo-container">
+            <h2 class="fade-in">Lihat CreativeFlow Pro dalam Aksi</h2>
+            <p>Platform kami dirancang untuk membuat alur kerja kreatif Anda lebih lancar dan produktif.</p>
+            <div class="demo-video">
+                <div class="play-button">
+                    <i class="fas fa-play play-icon"></i>
+                </div>
+            </div>
+            <button class="cta-button">Request Demo Pribadi</button>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="pricing-section" id="pricing">
         <div class="container">
-            <h2 class="section-title">What <span class="text-gradient">Clients Say</span></h2>
-            <p class="section-subtitle">Hear from creative professionals who transformed their workflow with our AI Feedback Analyzer.</p>
-            
-            <div class="testimonials-slider">
+            <div class="section-title">
+                <h2>Harga yang Sesuai dengan Kebutuhan Anda</h2>
+                <p>Pilih paket yang sesuai dengan ukuran bisnis kreatif Anda. Skalakan kapan saja.</p>
+            </div>
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <h3>Freelancer</h3>
+                    <div class="price">Rp99.000<span>/bulan</span></div>
+                    <ul class="pricing-features">
+                        <li>5 Proyek Aktif</li>
+                        <li>3 Klien</li>
+                        <li>Alat Proofing Dasar</li>
+                        <li>Manajemen Tugas</li>
+                        <li>Pembuatan Faktur</li>
+                        <li>1GB Penyimpanan</li>
+                    </ul>
+                    <button class="cta-button">Mulai Sekarang</button>
+                </div>
+                <div class="pricing-card popular">
+                    <div class="popular-badge">POPULAR</div>
+                    <h3>Studio Kecil</h3>
+                    <div class="price">Rp249.000<span>/bulan</span></div>
+                    <ul class="pricing-features">
+                        <li>15 Proyek Aktif</li>
+                        <li>10 Klien</li>
+                        <li>Alat Proofing Lengkap</li>
+                        <li>Version Control Pro</li>
+                        <li>Portal Klien Kustom</li>
+                        <li>Tim Hingga 5 Orang</li>
+                        <li>10GB Penyimpanan</li>
+                        <li>AI Feedback Analyzer</li>
+                    </ul>
+                    <button class="cta-button">Mulai Sekarang</button>
+                </div>
+                <div class="pricing-card">
+                    <h3>Agency</h3>
+                    <div class="price">Rp499.000<span>/bulan</span></div>
+                    <ul class="pricing-features">
+                        <li>Proyek Tidak Terbatas</li>
+                        <li>Klien Tidak Terbatas</li>
+                        <li>Semua Fitur Premium</li>
+                        <li>Tim Hingga 20 Orang</li>
+                        <li>50GB Penyimpanan</li>
+                        <li>White-label Client Portal</li>
+                        <li>Prioritas Support</li>
+                        <li>Onboarding Eksklusif</li>
+                    </ul>
+                    <button class="cta-button">Mulai Sekarang</button>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 2rem;">
+                <p>Butuh solusi khusus untuk tim besar? <a href="#" style="color: var(--primary); font-weight: 600;">Hubungi kami</a> untuk penawaran enterprise.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials-section" id="testimonials">
+        <div class="container">
+            <div class="section-title">
+                <h2>Apa Kata Klien Kami</h2>
+                <p>CreativeFlow Pro telah membantu ratusan profesional kreatif mengelola pekerjaan mereka dengan lebih baik.</p>
+            </div>
+            <div class="testimonial-slider">
+                <div class="testimonial active">
+                    <img src="https://randomuser.me/api/portraits/women/32.jpg" alt="Testimonial" class="testimonial-avatar">
+                    <p class="testimonial-text">"Sebagai desainer freelance, CreativeFlow Pro menyederhanakan proses dari menerima brief hingga final approval. Fitur proofing visual menghemat banyak waktu komunikasi dengan klien!"</p>
+                    <p class="testimonial-author">Sarah Wijaya</p>
+                    <p class="testimonial-role">Freelance Graphic Designer</p>
+                </div>
                 <div class="testimonial">
-                    <p class="testimonial-quote">The AI Feedback Analyzer helped us identify that 80% of our clients actually wanted simpler designs when they asked for 'more creative' solutions. This insight completely changed our approach.</p>
-                    <div class="testimonial-author">
-                        <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Sarah Johnson" class="author-avatar">
-                        <div class="author-info">
-                            <h4>Sarah Johnson</h4>
-                            <p>Creative Director, Design Studio</p>
-                        </div>
-                    </div>
+                    <img src="https://randomuser.me/api/portraits/men/45.jpg" alt="Testimonial" class="testimonial-avatar">
+                    <p class="testimonial-text">"Version Control-nya menyelamatkan hidup kami! Tidak ada lagi revisi yang tertukar atau file yang hilang. Portal klien juga membuat kami terlihat sangat profesional di mata klien."</p>
+                    <p class="testimonial-author">Budi Santoso</p>
+                    <p class="testimonial-role">Creative Director, Studio Kreatif</p>
+                </div>
+                <div class="testimonial">
+                    <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Testimonial" class="testimonial-avatar">
+                    <p class="testimonial-text">"AI Feedback Analyzer adalah game changer. Sekarang kami bisa mengidentifikasi pola feedback klien dan meningkatkan proses kreatif kami berdasarkan data nyata."</p>
+                    <p class="testimonial-author">Dewi Kartika</p>
+                    <p class="testimonial-role">Pemilik Agen Digital</p>
+                </div>
+                <div class="slider-controls">
+                    <div class="slider-dot active" onclick="showTestimonial(0)"></div>
+                    <div class="slider-dot" onclick="showTestimonial(1)"></div>
+                    <div class="slider-dot" onclick="showTestimonial(2)"></div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- ========== CTA SECTION ========== -->
-    <section class="section cta-section">
-        <div class="container">
-            <h2 class="cta-title">Ready to Transform Your Creative Process?</h2>
-            <p class="cta-subtitle">Join thousands of creative professionals who use AI Feedback Analyzer to deliver better work and happier clients.</p>
-            <a href="#" class="btn btn-primary btn-lg">Start Your Free Trial</a>
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container cta-container">
+            <h2 class="fade-in">Siap Mengubah Cara Anda Bekerja?</h2>
+            <p>Mulai 14 hari gratis tanpa perlu kartu kredit. Anda bisa membatalkan kapan saja.</p>
+            <form class="cta-form">
+                <input type="email" placeholder="Masukkan email Anda" class="cta-input" required>
+                <button type="submit" class="cta-submit">Coba Gratis</button>
+            </form>
+            <p><small>Dengan mendaftar, Anda menyetujui Syarat Layanan dan Kebijakan Privasi kami.</small></p>
         </div>
     </section>
 
-    <!-- ========== FOOTER ========== -->
+    <!-- Footer -->
     <footer>
         <div class="container">
             <div class="footer-grid">
                 <div class="footer-column">
-                    <a href="#" class="footer-logo">
-                        <i class="fas fa-magic"></i> CreativeFlow Pro
-                    </a>
-                    <p class="footer-description">The all-in-one platform for creative professionals to manage projects, collaborate with clients, and grow their business.</p>
+                    <h3>CreativeFlow Pro</h3>
+                    <p>Platform manajemen proyek dan klien khusus untuk profesional kreatif. Membantu Anda fokus pada karya terbaik Anda.</p>
                     <div class="social-links">
                         <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
                         <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
@@ -945,62 +1582,136 @@
                         <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
                     </div>
                 </div>
-                
                 <div class="footer-column">
-                    <h3>Product</h3>
-                    <ul class="footer-links">
-                        <li><a href="#">Features</a></li>
-                        <li><a href="#">Pricing</a></li>
-                        <li><a href="#">Integrations</a></li>
-                        <li><a href="#">Updates</a></li>
+                    <h3>Produk</h3>
+                    <ul>
+                        <li><a href="#">Fitur</a></li>
+                        <li><a href="#">Harga</a></li>
+                        <li><a href="#">Integrasi</a></li>
+                        <li><a href="#">Pembaruan</a></li>
                         <li><a href="#">Roadmap</a></li>
                     </ul>
                 </div>
-                
                 <div class="footer-column">
-                    <h3>Resources</h3>
-                    <ul class="footer-links">
+                    <h3>Perusahaan</h3>
+                    <ul>
+                        <li><a href="#">Tentang Kami</a></li>
+                        <li><a href="#">Karir</a></li>
                         <li><a href="#">Blog</a></li>
-                        <li><a href="#">Tutorials</a></li>
-                        <li><a href="#">Templates</a></li>
-                        <li><a href="#">Help Center</a></li>
-                        <li><a href="#">API Docs</a></li>
+                        <li><a href="#">Press</a></li>
+                        <li><a href="#">Kontak</a></li>
                     </ul>
                 </div>
-                
                 <div class="footer-column">
-                    <h3>Company</h3>
-                    <ul class="footer-links">
-                        <li><a href="#">About Us</a></li>
-                        <li><a href="#">Careers</a></li>
-                        <li><a href="#">Contact</a></li>
-                        <li><a href="#">Privacy</a></li>
-                        <li><a href="#">Terms</a></li>
+                    <h3>Sumber Daya</h3>
+                    <ul>
+                        <li><a href="#">Bantuan</a></li>
+                        <li><a href="#">Webinar</a></li>
+                        <li><a href="#">Template</a></li>
+                        <li><a href="#">API</a></li>
+                        <li><a href="#">Status</a></li>
                     </ul>
                 </div>
             </div>
-            
             <div class="footer-bottom">
-                <p>&copy; 2023 CreativeFlow Pro. All rights reserved.</p>
+                <p>&copy; 2023 CreativeFlow Pro. All rights reserved. | <a href="#">Kebijakan Privasi</a> | <a href="#">Syarat Layanan</a></p>
             </div>
         </div>
     </footer>
 
-    <!-- ========== SCRIPTS ========== -->
+    <!-- Demo Widget -->
+    <div class="demo-widget" onclick="openDemoChat()">
+        <i class="fas fa-comment-dots"></i>
+    </div>
+
     <script>
-        // Header Scroll Effect
-        window.addEventListener('scroll', function() {
-            const header = document.getElementById('header');
-            if (window.scrollY > 50) {
-                header.classList.add('scrolled');
-            } else {
-                header.classList.remove('scrolled');
-            }
+        // Mobile Navigation Toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileNav = document.getElementById('mobileNav');
+        const closeBtn = document.getElementById('closeBtn');
+        const overlay = document.getElementById('overlay');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileNav.classList.add('active');
+            overlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
         });
 
-        // Animate elements on scroll
-        const animateOnScroll = function() {
-            const elements = document.querySelectorAll('.feature-card, .step, .testimonial');
+        closeBtn.addEventListener('click', () => {
+            mobileNav.classList.remove('active');
+            overlay.classList.remove('active');
+            document.body.style.overflow = '';
+        });
+
+        overlay.addEventListener('click', () => {
+            mobileNav.classList.remove('active');
+            overlay.classList.remove('active');
+            document.body.style.overflow = '';
+        });
+
+        // Close mobile menu when clicking on links
+        document.querySelectorAll('.mobile-nav a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileNav.classList.remove('active');
+                overlay.classList.remove('active');
+                document.body.style.overflow = '';
+            });
+        });
+
+        // Feature Tabs
+        function showFeature(featureId) {
+            document.querySelectorAll('.feature-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            document.querySelectorAll('.feature-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            document.getElementById(featureId).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+        
+        // Testimonial Slider
+        let currentTestimonial = 0;
+        const testimonials = document.querySelectorAll('.testimonial');
+        const dots = document.querySelectorAll('.slider-dot');
+        
+        function showTestimonial(index) {
+            testimonials[currentTestimonial].classList.remove('active');
+            dots[currentTestimonial].classList.remove('active');
+            
+            currentTestimonial = index;
+            
+            testimonials[currentTestimonial].classList.add('active');
+            dots[currentTestimonial].classList.add('active');
+        }
+        
+        // Auto rotate testimonials
+        setInterval(() => {
+            let nextTestimonial = (currentTestimonial + 1) % testimonials.length;
+            showTestimonial(nextTestimonial);
+        }, 5000);
+        
+        // Demo Widget
+        function openDemoChat() {
+            alert('Hai! Ada yang bisa kami bantu? Tim kami siap menjawab pertanyaan Anda tentang CreativeFlow Pro.');
+        }
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+        
+        // Animation on scroll
+        window.addEventListener('scroll', function() {
+            const elements = document.querySelectorAll('.fade-in, .slide-up');
             
             elements.forEach(element => {
                 const elementPosition = element.getBoundingClientRect().top;
@@ -1011,24 +1722,33 @@
                     element.style.transform = 'translateY(0)';
                 }
             });
-        };
-
-        // Set initial state
-        document.querySelectorAll('.feature-card, .step, .testimonial').forEach(el => {
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(30px)';
-            el.style.transition = 'all 0.6s cubic-bezier(0.25, 0.8, 0.25, 1)';
+        });
+        
+        // Trigger animations on load
+        window.addEventListener('load', function() {
+            const elements = document.querySelectorAll('.fade-in, .slide-up');
+            
+            elements.forEach(element => {
+                const elementPosition = element.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
+                
+                if (elementPosition < windowHeight - 100) {
+                    element.style.opacity = '1';
+                    element.style.transform = 'translateY(0)';
+                }
+            });
+        });
+        
+        // Play button for demo video
+        document.querySelector('.play-button').addEventListener('click', function() {
+            alert('Video demo akan diputar di sini. Untuk demo interaktif, silakan klik "Request Demo Pribadi".');
         });
 
-        // Run on load and scroll
-        window.addEventListener('load', animateOnScroll);
-        window.addEventListener('scroll', animateOnScroll);
-
-        // Dynamic Connection Lines for AI Visualization
+        // AI Visualization Connections
         function createConnections() {
             const core = document.querySelector('.ai-core');
             const nodes = document.querySelectorAll('.data-node');
-            const visualization = document.querySelector('.ai-visualization');
+            const container = document.querySelector('.ai-visualization');
             
             // Clear existing connections
             document.querySelectorAll('.connection-line').forEach(el => el.remove());
@@ -1039,12 +1759,12 @@
                 
                 const coreRect = core.getBoundingClientRect();
                 const nodeRect = node.getBoundingClientRect();
-                const visRect = visualization.getBoundingClientRect();
+                const containerRect = container.getBoundingClientRect();
                 
-                const coreX = coreRect.left + coreRect.width/2 - visRect.left;
-                const coreY = coreRect.top + coreRect.height/2 - visRect.top;
-                const nodeX = nodeRect.left + nodeRect.width/2 - visRect.left;
-                const nodeY = nodeRect.top + nodeRect.height/2 - visRect.top;
+                const coreX = coreRect.left + coreRect.width/2 - containerRect.left;
+                const coreY = coreRect.top + coreRect.height/2 - containerRect.top;
+                const nodeX = nodeRect.left + nodeRect.width/2 - containerRect.left;
+                const nodeY = nodeRect.top + nodeRect.height/2 - containerRect.top;
                 
                 const length = Math.sqrt(Math.pow(nodeX - coreX, 2) + Math.pow(nodeY - coreY, 2));
                 const angle = Math.atan2(nodeY - coreY, nodeX - coreX);
@@ -1055,291 +1775,42 @@
                 line.style.transform = `rotate(${angle}rad)`;
                 line.style.opacity = '0';
                 
-                visualization.appendChild(line);
+                container.appendChild(line);
                 
-                                // Animate in
+                // Animate in
                 setTimeout(() => {
                     line.style.transition = 'opacity 0.8s ease';
                     line.style.opacity = '0.3';
-                    
-                    // Pulsing animation
-                    let pulseCount = 0;
-                    const pulseInterval = setInterval(() => {
-                        pulseCount++;
-                        if (pulseCount > 3) {
-                            clearInterval(pulseInterval);
-                            line.style.opacity = '0';
-                            setTimeout(() => line.remove(), 1000);
-                        } else {
-                            line.style.opacity = '0.3';
-                            setTimeout(() => {
-                                line.style.opacity = '0.1';
-                            }, 500);
-                        }
-                    }, 1500);
                 }, Math.random() * 1000);
             });
         }
 
-        // Create initial connections
+        // Initialize connections
         createConnections();
-
-        // Continuous connection animation
-        setInterval(createConnections, 4000);
-
-        // 3D Tilt Effect for Feature Cards
-        document.querySelectorAll('.feature-card').forEach(card => {
-            card.addEventListener('mousemove', (e) => {
-                const x = e.clientX - card.getBoundingClientRect().left;
-                const y = e.clientY - card.getBoundingClientRect().top;
-                
-                const centerX = card.offsetWidth / 2;
-                const centerY = card.offsetHeight / 2;
-                
-                const angleX = (y - centerY) / 15;
-                const angleY = (centerX - x) / 15;
-                
-                card.style.transform = `perspective(1000px) rotateX(${angleX}deg) rotateY(${angleY}deg) scale(1.03)`;
-                
-                // Glow effect
-                const glow = document.createElement('div');
-                glow.className = 'card-glow';
-                glow.style.left = `${x}px`;
-                glow.style.top = `${y}px`;
-                card.appendChild(glow);
-                
-                setTimeout(() => {
-                    glow.remove();
-                }, 1000);
-            });
-            
-            card.addEventListener('mouseleave', () => {
-                card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale(1)';
-            });
-        });
-
-        // Add glow effect style dynamically
-        const style = document.createElement('style');
-        style.textContent = `
-            .card-glow {
-                position: absolute;
-                width: 100px;
-                height: 100px;
-                background: radial-gradient(circle, rgba(255,255,255,0.8), transparent 70%);
-                border-radius: 50%;
-                transform: translate(-50%, -50%);
-                pointer-events: none;
-                animation: glowFade 1s forwards;
-                z-index: 0;
-            }
-            
-            @keyframes glowFade {
-                0% { transform: translate(-50%, -50%) scale(0.5); opacity: 0.8; }
-                100% { transform: translate(-50%, -50%) scale(1.5); opacity: 0; }
-            }
-        `;
-        document.head.appendChild(style);
-
-        // Data Node Interaction
-        document.querySelectorAll('.data-node').forEach(node => {
-            node.addEventListener('mouseenter', () => {
-                node.style.transform = 'translate(-50%, -50%) scale(1.2)';
-                node.style.boxShadow = `0 0 30px ${node.style.backgroundColor}`;
-                
-                // Create ripple effect
-                const ripple = document.createElement('div');
-                ripple.className = 'node-ripple';
-                ripple.style.backgroundColor = node.style.backgroundColor;
-                node.appendChild(ripple);
-                
-                setTimeout(() => {
-                    ripple.style.transform = 'scale(2)';
-                    ripple.style.opacity = '0';
-                }, 10);
-                
-                setTimeout(() => ripple.remove(), 1000);
-            });
-            
-            node.addEventListener('mouseleave', () => {
-                node.style.transform = 'translate(-50%, -50%) scale(1)';
-                node.style.boxShadow = '0 15px 35px rgba(0, 0, 0, 0.2)';
-            });
-            
-            // Add click effect
-            node.addEventListener('click', () => {
-                const burst = document.createElement('div');
-                burst.className = 'node-burst';
-                burst.style.backgroundColor = node.style.backgroundColor;
-                document.querySelector('.ai-visualization').appendChild(burst);
-                
-                setTimeout(() => {
-                    burst.style.transform = 'scale(1.5)';
-                    burst.style.opacity = '0';
-                }, 10);
-                
-                setTimeout(() => burst.remove(), 1000);
-            });
-        });
-
-        // Add node effects style
-        const nodeStyles = document.createElement('style');
-        nodeStyles.textContent = `
-            .node-ripple {
-                position: absolute;
-                width: 100%;
-                height: 100%;
-                border-radius: 50%;
-                background-color: inherit;
-                opacity: 0.5;
-                transform: scale(1);
-                transition: all 0.8s ease-out;
-                pointer-events: none;
-                z-index: -1;
-            }
-            
-            .node-burst {
-                position: absolute;
-                width: 80px;
-                height: 80px;
-                border-radius: 50%;
-                background-color: inherit;
-                opacity: 0.3;
-                transform: scale(0);
-                transition: all 0.8s ease-out;
-                pointer-events: none;
-                z-index: 0;
-            }
-        `;
-        document.head.appendChild(nodeStyles);
-
-        // Testimonial Slider
-        const testimonials = [
-            {
-                quote: "The AI Feedback Analyzer helped us identify that 80% of our clients actually wanted simpler designs when they asked for 'more creative' solutions. This insight completely changed our approach.",
-                name: "Sarah Johnson",
-                role: "Creative Director, Design Studio",
-                image: "https://randomuser.me/api/portraits/women/44.jpg"
-            },
-            {
-                quote: "We reduced revision cycles by 60% after implementing the AI suggestions. It's like having a senior creative director reviewing every client comment.",
-                name: "Michael Chen",
-                role: "Lead Designer, Digital Agency",
-                image: "https://randomuser.me/api/portraits/men/32.jpg"
-            },
-            {
-                quote: "The sentiment analysis feature saved us from missing subtle client frustrations that we would have otherwise overlooked. Game changer for client relationships.",
-                name: "Emma Rodriguez",
-                role: "Video Production Manager",
-                image: "https://randomuser.me/api/portraits/women/68.jpg"
-            }
-        ];
-
-        let currentTestimonial = 0;
-        const testimonialElement = document.querySelector('.testimonial');
         
-        function showTestimonial(index) {
-            testimonialElement.style.opacity = '0';
-            
-            setTimeout(() => {
-                testimonialElement.querySelector('.testimonial-quote').textContent = testimonials[index].quote;
-                testimonialElement.querySelector('.author-avatar').src = testimonials[index].image;
-                testimonialElement.querySelector('h4').textContent = testimonials[index].name;
-                testimonialElement.querySelector('p').textContent = testimonials[index].role;
-                
-                testimonialElement.style.opacity = '1';
-                testimonialElement.style.animation = 'fadeIn 0.8s ease';
-            }, 500);
-        }
-
-        // Auto-rotate testimonials
+        // Animate connections continuously
         setInterval(() => {
-            currentTestimonial = (currentTestimonial + 1) % testimonials.length;
-            showTestimonial(currentTestimonial);
-        }, 5000);
+            createConnections();
+        }, 3000);
 
-        // Smooth scrolling for navigation
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    window.scrollTo({
-                        top: target.offsetTop - 80,
-                        behavior: 'smooth'
-                    });
+        // Animate feature cards on scroll
+        const featureCards = document.querySelectorAll('.feature-card, .usp-card, .pricing-card');
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
                 }
             });
+        }, { threshold: 0.1 });
+
+        featureCards.forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            card.style.transition = 'all 0.6s ease';
+            observer.observe(card);
         });
-
-        // Add animated background elements
-        function createFloatingShapes() {
-            const colors = ['rgba(110, 69, 226, 0.1)', 'rgba(136, 211, 206, 0.1)', 'rgba(255, 126, 95, 0.1)'];
-            const sections = document.querySelectorAll('.section, .hero');
-            
-            sections.forEach(section => {
-                // Clear existing shapes
-                section.querySelectorAll('.floating-shape').forEach(shape => shape.remove());
-                
-                // Create new shapes
-                for (let i = 0; i < 5; i++) {
-                    const shape = document.createElement('div');
-                    shape.className = 'floating-shape';
-                    
-                    const size = Math.random() * 100 + 50;
-                    const duration = Math.random() * 20 + 20;
-                    const delay = Math.random() * 10;
-                    const color = colors[Math.floor(Math.random() * colors.length)];
-                    
-                    shape.style.width = `${size}px`;
-                    shape.style.height = `${size}px`;
-                    shape.style.background = color;
-                    shape.style.left = `${Math.random() * 100}%`;
-                    shape.style.top = `${Math.random() * 100}%`;
-                    shape.style.animation = `float ${duration}s linear ${delay}s infinite`;
-                    shape.style.borderRadius = Math.random() > 0.5 ? '50%' : '20%';
-                    
-                    section.appendChild(shape);
-                }
-            });
-        }
-
-        // Add floating shapes style
-        const floatingStyles = document.createElement('style');
-        floatingStyles.textContent = `
-            .floating-shape {
-                position: absolute;
-                opacity: 0.3;
-                filter: blur(30px);
-                z-index: 0;
-                pointer-events: none;
-            }
-            
-            @keyframes float {
-                0% {
-                    transform: translate(0, 0) rotate(0deg);
-                }
-                25% {
-                    transform: translate(20px, 20px) rotate(5deg);
-                }
-                50% {
-                    transform: translate(0, 40px) rotate(0deg);
-                }
-                75% {
-                    transform: translate(-20px, 20px) rotate(-5deg);
-                }
-                100% {
-                    transform: translate(0, 0) rotate(0deg);
-                }
-            }
-        `;
-        document.head.appendChild(floatingStyles);
-
-        // Initialize floating shapes
-        createFloatingShapes();
-
-        // Recreate shapes on resize
-        window.addEventListener('resize', createFloatingShapes);
     </script>
 </body>
 </html>
