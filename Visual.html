@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kolaborasi Visual | CreativeFlow Pro</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* ========== VARIABEL & GLOBAL ========== */
+        :root {
+            --primary: #6e45e2;
+            --primary-light: #8d6bec;
+            --primary-dark: #4d2bcb;
+            --secondary: #88d3ce;
+            --secondary-light: #a7e4e0;
+            --accent: #ff7e5f;
+            --accent-light: #ff957a;
+            --dark: #2a2d3e;
+            --light: #f9f9ff;
+            --gradient-collab: linear-gradient(135deg, #6e45e2, #88d3ce);
+            --gradient-tools: linear-gradient(135deg, #ff7e5f, #ff9a44);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .section {
+            padding: 100px 0;
+            position: relative;
+        }
+
+        /* ========== HEADER KUSTOM ========== */
+        .collab-header {
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 5px 30px rgba(110, 69, 226, 0.1);
+        }
+
+        .collab-header .logo {
+            color: var(--primary);
+        }
+
+        /* ========== HERO KOLABORASI ========== */
+        .collab-hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            background: var(--gradient-collab);
+            color: white;
+            overflow: hidden;
+        }
+
+        .collab-hero-content {
+            position: relative;
+            z-index: 5;
+        }
+
+        .collab-hero-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+            background: linear-gradient(to right, white, var(--secondary-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .collab-hero-subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 2.5rem;
+            max-width: 600px;
+        }
+
+        .collab-hero-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 2rem;
+        }
+
+        .btn-collab {
+            background: white;
+            color: var(--primary);
+        }
+
+        .btn-collab:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(255, 255, 255, 0.3);
+        }
+
+        /* ANIMASI CANVAS INTERAKTIF */
+        .collab-canvas {
+            position: absolute;
+            right: -200px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 700px;
+            height: 700px;
+        }
+
+        .canvas-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .canvas-mockup {
+            position: absolute;
+            width: 80%;
+            height: 80%;
+            top: 10%;
+            left: 10%;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            transform-style: preserve-3d;
+            animation: floatMockup 8s infinite alternate;
+        }
+
+        .canvas-toolbar {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            display: flex;
+            gap: 5px;
+            z-index: 3;
+        }
+
+        .canvas-tool {
+            width: 40px;
+            height: 40px;
+            background: white;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            color: var(--dark);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .canvas-tool:hover {
+            transform: translateY(-3px);
+            background: var(--primary);
+            color: white;
+        }
+
+        .canvas-comment {
+            position: absolute;
+            width: 200px;
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            z-index: 2;
+            animation: fadeInComment 1s forwards;
+        }
+
+        .canvas-comment::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 20px;
+            border-width: 10px 10px 0;
+            border-style: solid;
+            border-color: white transparent transparent;
+        }
+
+        @keyframes floatMockup {
+            0% { transform: translateY(-50%) rotateZ(0deg) rotateX(5deg); }
+            100% { transform: translateY(-55%) rotateZ(3deg) rotateX(8deg); }
+        }
+
+        @keyframes fadeInComment {
+            from { opacity: 0; transform: scale(0.8); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        /* ========== FITUR UNIK ========== */
+        .collab-features {
+            background: white;
+        }
+
+        .feature-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .feature-card-collab {
+            background: white;
+            border-radius: 20px;
+            padding: 40px 30px;
+            box-shadow: 0 15px 40px rgba(110, 69, 226, 0.1);
+            transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(110, 69, 226, 0.1);
+        }
+
+        .feature-card-collab:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 50px rgba(110, 69, 226, 0.15);
+        }
+
+        .feature-card-collab::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: var(--gradient-collab);
+        }
+
+        .feature-icon-collab {
+            width: 80px;
+            height: 80px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin-bottom: 25px;
+            color: white;
+            background: var(--gradient-tools);
+            box-shadow: 0 10px 20px rgba(255, 126, 95, 0.3);
+        }
+
+        /* ========== DEMO INTERAKTIF ========== */
+        .interactive-demo {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+        }
+
+        .demo-container {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
+            margin-top: 50px;
+        }
+
+        .demo-toolbar {
+            display: flex;
+            padding: 15px;
+            background: var(--dark);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .demo-tool {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            margin-right: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .demo-tool:hover {
+            background: var(--primary);
+        }
+
+        .demo-canvas {
+            height: 500px;
+            background: url('https://images.unsplash.com/photo-1607746882042-944635dfe10e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80') center/cover;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .demo-comment {
+            position: absolute;
+            width: 200px;
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            animation: popIn 0.5s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+        }
+
+        @keyframes popIn {
+            0% { transform: scale(0); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        /* ========== RESPONSIF ========== */
+        @media (max-width: 992px) {
+            .collab-hero {
+                text-align: center;
+                padding: 120px 0 60px;
+            }
+
+            .collab-hero-title {
+                font-size: 2.5rem;
+            }
+
+            .collab-hero-buttons {
+                justify-content: center;
+            }
+
+            .collab-canvas {
+                position: relative;
+                right: auto;
+                top: auto;
+                transform: none;
+                width: 100%;
+                height: 400px;
+                margin-top: 50px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- ========== HEADER KUSTOM ========== -->
+    <header class="collab-header" id="header">
+        <div class="container">
+            <div class="header-container">
+                <a href="#" class="logo">
+                    <i class="fas fa-magic logo-icon"></i>
+                    <span>CreativeFlow Pro</span>
+                </a>
+                
+                <div class="menu-toggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                
+                <nav id="nav">
+                    <ul>
+                        <li><a href="#fitur">Fitur</a></li>
+                        <li><a href="#demo">Demo</a></li>
+                        <li><a href="#harga">Harga</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- ========== HERO KOLABORASI ========== -->
+    <section class="collab-hero">
+        <div class="container">
+            <div class="collab-hero-content">
+                <h1 class="collab-hero-title">Kolaborasi Visual Tanpa Batas</h1>
+                <p class="collab-hero-subtitle">Anotasi langsung pada desain, video, dan mockup website dengan alat proofing terintegrasi yang dibuat khusus untuk kreatif.</p>
+                <div class="collab-hero-buttons">
+                    <a href="#" class="btn btn-primary btn-collab">Mulai Gratis</a>
+                    <a href="#" class="btn btn-secondary">Lihat Demo</a>
+                </div>
+            </div>
+            
+            <!-- CANVAS INTERAKTIF -->
+            <div class="collab-canvas">
+                <div class="canvas-container">
+                    <div class="canvas-mockup">
+                        <div class="canvas-toolbar">
+                            <div class="canvas-tool"><i class="fas fa-comment"></i></div>
+                            <div class="canvas-tool"><i class="fas fa-square"></i></div>
+                            <div class="canvas-tool"><i class="fas fa-arrow-right"></i></div>
+                            <div class="canvas-tool"><i class="fas fa-pencil-alt"></i></div>
+                        </div>
+                        
+                        <div class="canvas-comment" style="top: 30%; left: 40%;">
+                            <strong>Warna background</strong>
+                            <p>Coba lebih gelap untuk kontras yang lebih baik</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== FITUR UNIK ========== -->
+    <section class="section collab-features" id="fitur">
+        <div class="container">
+            <h2 class="section-title">Alat Kolaborasi <span class="text-gradient">Visual</span></h2>
+            <p class="section-subtitle">Memberikan feedback langsung seperti berada di sebelah rekan tim Anda.</p>
+            
+            <div class="feature-cards">
+                <div class="feature-card-collab">
+                    <div class="feature-icon-collab">
+                        <i class="fas fa-pen-fancy"></i>
+                    </div>
+                    <h3>Anotasi Presisi</h3>
+                    <p>Beri tanda pada area spesifik dengan alat drawing pixel-perfect untuk revisi yang akurat.</p>
+                </div>
+                
+                <div class="feature-card-collab">
+                    <div class="feature-icon-collab">
+                        <i class="fas fa-video"></i>
+                    </div>
+                    <h3>Frame-by-Frame</h3>
+                    <p>Komentari video frame spesifik dengan timestamp dan drawing langsung di player.</p>
+                </div>
+                
+                <div class="feature-card-collab">
+                    <div class="feature-icon-collab">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h3>Mockup Interaktif</h3>
+                    <p>Klik elemen UI langsung untuk memberikan feedback spesifik pada komponen.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== DEMO INTERAKTIF ========== -->
+    <section class="section interactive-demo" id="demo">
+        <div class="container">
+            <h2 class="section-title">Coba <span class="text-gradient">Sendiri</span></h2>
+            <p class="section-subtitle">Klik pada gambar untuk memberikan feedback seperti di CreativeFlow Pro.</p>
+            
+            <div class="demo-container">
+                <div class="demo-toolbar">
+                    <div class="demo-tool"><i class="fas fa-comment"></i></div>
+                    <div class="demo-tool"><i class="fas fa-square"></i></div>
+                    <div class="demo-tool"><i class="fas fa-arrow-right"></i></div>
+                    <div class="demo-tool"><i class="fas fa-pencil-alt"></i></div>
+                </div>
+                <div class="demo-canvas" id="interactiveCanvas">
+                    <!-- Komentar akan muncul di sini via JS -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== SCRIPT INTERAKTIF ========== -->
+    <script>
+        // DEMO INTERAKTIF
+        const canvas = document.getElementById('interactiveCanvas');
+        const colors = ['#6e45e2', '#ff7e5f', '#88d3ce', '#ffd166'];
+        let currentTool = 'comment';
+
+        canvas.addEventListener('click', (e) => {
+            if (currentTool === 'comment') {
+                const comment = document.createElement('div');
+                comment.className = 'demo-comment';
+                comment.style.left = `${e.offsetX}px`;
+                comment.style.top = `${e.offsetY}px`;
+                comment.style.borderLeft = `4px solid ${colors[Math.floor(Math.random() * colors.length)]}`;
+                comment.innerHTML = `
+                    <strong>Feedback</strong>
+                    <p>Klik untuk edit teks...</p>
+                `;
+                canvas.appendChild(comment);
+
+                // Animasi masuk
+                setTimeout(() => {
+                    comment.style.transform = 'scale(1)';
+                }, 10);
+
+                // Hapus komentar saat diklik
+                comment.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    comment.style.transform = 'scale(0)';
+                    setTimeout(() => comment.remove(), 300);
+                });
+            }
+        });
+
+        // TOOLBAR INTERAKSI
+        document.querySelectorAll('.demo-tool').forEach(tool => {
+            tool.addEventListener('click', () => {
+                document.querySelector('.demo-tool.active')?.classList.remove('active');
+                tool.classList.add('active');
+                currentTool = tool.querySelector('i').className.replace('fas fa-', '');
+            });
+        });
+
+        // ANIMASI CANVAS HERO
+        const mockup = document.querySelector('.canvas-mockup');
+        let rotationX = 5;
+        let rotationZ = 0;
+        let floatingDirection = 1;
+
+        function animateMockup() {
+            rotationZ += 0.002 * floatingDirection;
+            
+            if (rotationZ > 0.1) floatingDirection = -1;
+            if (rotationZ < -0.1) floatingDirection = 1;
+            
+            mockup.style.transform = `translateY(-50%) rotateZ(${rotationZ}rad) rotateX(${rotationX}deg)`;
+            requestAnimationFrame(animateMockup);
+        }
+
+        animateMockup();
+
+        // KOMENTAR BERGERAK
+        const comment = document.querySelector('.canvas-comment');
+        let pulseDirection = 1;
+        let pulseScale = 1;
+
+        function pulseComment() {
+            pulseScale += 0.002 * pulseDirection;
+            
+            if (pulseScale > 1.03) pulseDirection = -1;
+            if (pulseScale < 0.97) pulseDirection = 1;
+            
+            comment.style.transform = `scale(${pulseScale})`;
+            requestAnimationFrame(pulseComment);
+        }
+
+        pulseComment();
+    </script>
+</body>
+</html>
