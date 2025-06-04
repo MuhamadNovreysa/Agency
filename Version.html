@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Version History Pro | CreativeFlow Pro</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* ========== VARIABEL CSS EXTENDED ========== */
+        :root {
+            /* Primary Colors */
+            --primary-50: #f5f2ff;
+            --primary-100: #e9e0ff;
+            --primary-200: #d5c7ff;
+            --primary-300: #b399ff;
+            --primary-400: #8d6bec;
+            --primary-500: #6e45e2;
+            --primary-600: #5d3ac9;
+            --primary-700: #4d2bcb;
+            --primary-800: #3c1fb3;
+            --primary-900: #2c1399;
+            
+            /* Version History Colors */
+            --version-current: #6e45e2;
+            --version-past: #88d3ce;
+            --version-archived: #b8b8c7;
+            --version-milestone: #ff7e5f;
+            
+            /* Gradients */
+            --gradient-version-timeline: linear-gradient(to right, 
+                var(--version-milestone), 
+                var(--primary-500), 
+                var(--version-past));
+            
+            /* Shadows */
+            --shadow-version-card: 0 4px 12px rgba(110, 69, 226, 0.15);
+            --shadow-version-card-hover: 0 8px 24px rgba(110, 69, 226, 0.25);
+        }
+
+        /* ========== BASE STYLES ========== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
+        }
+
+        body {
+            font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 
+                       'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 
+                       sans-serif;
+            line-height: 1.6;
+            color: #2a2d3e;
+            background-color: #f9f9ff;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* ========== HEADER ========== */
+        .version-header {
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.05);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            padding: 1rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .version-header.scrolled {
+            padding: 0.5rem 0;
+            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        /* ========== HERO SECTION ========== */
+        .version-hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            background: linear-gradient(135deg, #2a2d3e, #3c3f54);
+            color: white;
+            padding: 8rem 0 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .version-hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 200%;
+            background: radial-gradient(circle, 
+                      rgba(110, 69, 226, 0.1) 0%, 
+                      transparent 60%);
+            transform: rotate(30deg);
+            z-index: 1;
+        }
+
+        .version-hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 600px;
+        }
+
+        .version-hero-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(to right, 
+                        white, 
+                        #a7e4e0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .version-hero-subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 2.5rem;
+        }
+
+        /* ========== TIMELINE SECTION ========== */
+        .version-timeline {
+            padding: 6rem 0;
+            background: white;
+            position: relative;
+        }
+
+        .timeline-container {
+            position: relative;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .timeline-line {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: var(--gradient-version-timeline);
+            transform: translateX(-50%);
+            z-index: 1;
+        }
+
+        .timeline-items {
+            display: flex;
+            flex-direction: column;
+            gap: 4rem;
+        }
+
+        .timeline-item {
+            display: flex;
+            position: relative;
+            z-index: 2;
+        }
+
+        .timeline-item:nth-child(odd) {
+            justify-content: flex-start;
+            padding-right: calc(50% + 2rem);
+            text-align: right;
+        }
+
+        .timeline-item:nth-child(even) {
+            justify-content: flex-end;
+            padding-left: calc(50% + 2rem);
+            text-align: left;
+        }
+
+        .timeline-card {
+            background: white;
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: var(--shadow-version-card);
+            width: 100%;
+            max-width: 500px;
+            transition: all 0.3s ease;
+            position: relative;
+            border: 1px solid rgba(0, 0, 0, 0.03);
+        }
+
+        .timeline-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-version-card-hover);
+        }
+
+        .timeline-card::before {
+            content: '';
+            position: absolute;
+            width: 1.5rem;
+            height: 1.5rem;
+            background: var(--version-current);
+            border-radius: 50%;
+            border: 4px solid white;
+            top: 2rem;
+        }
+
+        .timeline-item:nth-child(odd) .timeline-card::before {
+            right: -3.25rem;
+        }
+
+        .timeline-item:nth-child(even) .timeline-card::before {
+            left: -3.25rem;
+        }
+
+        .timeline-item.milestone .timeline-card::before {
+            background: var(--version-milestone);
+            width: 2rem;
+            height: 2rem;
+        }
+
+        .timeline-item.past .timeline-card::before {
+            background: var(--version-past);
+        }
+
+        .timeline-item.archived .timeline-card::before {
+            background: var(--version-archived);
+        }
+
+        .version-date {
+            font-size: 0.9rem;
+            color: #6e45e2;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .version-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .version-description {
+            color: #4e526a;
+            margin-bottom: 1.5rem;
+        }
+
+        .version-meta {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.85rem;
+            color: #808095;
+        }
+
+        .version-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        /* ========== COMPARE SECTION ========== */
+        .version-compare {
+            padding: 6rem 0;
+            background: #f9f9ff;
+        }
+
+        .compare-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .compare-column {
+            background: white;
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+        }
+
+        .compare-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid #e6e6f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .compare-title {
+            font-weight: 600;
+            color: #6e45e2;
+        }
+
+        .compare-content {
+            padding: 1.5rem;
+            height: 400px;
+            overflow-y: auto;
+        }
+
+        .compare-diff {
+            background: #f5f2ff;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .diff-added {
+            background: rgba(136, 211, 206, 0.2);
+            padding: 0.2rem 0.4rem;
+            border-radius: 0.25rem;
+            text-decoration: underline;
+        }
+
+        .diff-removed {
+            background: rgba(255, 126, 95, 0.2);
+            padding: 0.2rem 0.4rem;
+            border-radius: 0.25rem;
+            text-decoration: line-through;
+        }
+
+        /* ========== RESTORE SECTION ========== */
+        .version-restore {
+            padding: 6rem 0;
+            background: linear-gradient(135deg, #6e45e2, #88d3ce);
+            color: white;
+            text-align: center;
+        }
+
+        .restore-title {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .restore-subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 700px;
+            margin: 0 auto 2.5rem;
+        }
+
+        /* ========== RESPONSIVE DESIGN ========== */
+        @media (max-width: 992px) {
+            .version-hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .timeline-line {
+                left: 2rem;
+            }
+            
+            .timeline-item:nth-child(odd),
+            .timeline-item:nth-child(even) {
+                padding-left: 4.5rem;
+                padding-right: 1rem;
+                text-align: left;
+                justify-content: flex-start;
+            }
+            
+            .timeline-item:nth-child(odd) .timeline-card::before,
+            .timeline-item:nth-child(even) .timeline-card::before {
+                left: -3.25rem;
+                right: auto;
+            }
+            
+            .compare-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .version-hero {
+                padding: 7rem 0 3rem;
+                text-align: center;
+            }
+            
+            .version-hero-content {
+                max-width: 100%;
+            }
+            
+            .version-hero-title {
+                font-size: 2rem;
+            }
+            
+            .version-hero-subtitle {
+                font-size: 1rem;
+            }
+            
+            .restore-title {
+                font-size: 2rem;
+            }
+            
+            .restore-subtitle {
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .container {
+                padding: 0 1rem;
+            }
+            
+            .version-title {
+                font-size: 1.25rem;
+            }
+            
+            .version-actions {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+            
+            .timeline-card {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- ========== HEADER ========== -->
+    <header class="version-header" id="header">
+        <div class="container">
+            <div class="header-container">
+                <a href="#" class="logo">
+                    <i class="fas fa-history"></i>
+                    <span>Version History Pro</span>
+                </a>
+                
+                <nav class="nav">
+                    <ul class="nav-list">
+                        <li><a href="#timeline">Timeline</a></li>
+                        <li><a href="#compare">Compare</a></li>
+                        <li><a href="#restore">Restore</a></li>
+                    </ul>
+                </nav>
+                
+                <a href="#" class="btn btn-primary">Try Now</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- ========== HERO SECTION ========== -->
+    <section class="version-hero">
+        <div class="container">
+            <div class="version-hero-content">
+                <h1 class="version-hero-title">Never Lose Creative Work Again</h1>
+                <p class="version-hero-subtitle">Setiap perubahan pada file kreatif Anda dilacak dengan timeline visual, memungkinkan Anda kembali ke versi sebelumnya dengan satu klik.</p>
+                <div class="hero-buttons">
+                    <a href="#timeline" class="btn btn-primary">Explore Timeline</a>
+                    <a href="#demo" class="btn btn-secondary">See How It Works</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== TIMELINE SECTION ========== -->
+    <section class="version-timeline" id="timeline">
+        <div class="container">
+            <h2 class="section-title">Version <span class="text-gradient">Timeline</span></h2>
+            <p class="section-subtitle">Visual history of all your creative iterations</p>
+            
+            <div class="timeline-container">
+                <div class="timeline-line"></div>
+                
+                <div class="timeline-items">
+                    <!-- Current Version -->
+                    <div class="timeline-item">
+                        <div class="timeline-card">
+                            <div class="version-date">Today, 10:30 AM</div>
+                            <h3 class="version-title">Final Client Approval</h3>
+                            <p class="version-description">Client approved all changes with minor color adjustments to the logo.</p>
+                            <div class="version-meta">
+                                <span><i class="fas fa-user"></i> You</span>
+                                <span><i class="fas fa-file"></i> Brand Guidelines.pdf</span>
+                            </div>
+                            <div class="version-actions">
+                                <a href="#" class="btn btn-sm btn-primary">Restore</a>
+                                <a href="#" class="btn btn-sm btn-secondary">Compare</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Past Version -->
+                    <div class="timeline-item past">
+                        <div class="timeline-card">
+                            <div class="version-date">Yesterday, 4:15 PM</div>
+                            <h3 class="version-title">Client Feedback Round 3</h3>
+                            <p class="version-description">Updated typography based on client's request. Added new section for social media guidelines.</p>
+                            <div class="version-meta">
+                                <span><i class="fas fa-user"></i> Client</span>
+                                <span><i class="fas fa-file"></i> Brand Guidelines.pdf</span>
+                            </div>
+                            <div class="version-actions">
+                                <a href="#" class="btn btn-sm btn-primary">Restore</a>
+                                <a href="#" class="btn btn-sm btn-secondary">Compare</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Milestone Version -->
+                    <div class="timeline-item milestone">
+                        <div class="timeline-card">
+                            <div class="version-date">March 15, 2023</div>
+                            <h3 class="version-title">First Client Submission</h3>
+                            <p class="version-description">Initial complete version sent to client for review. Includes all brand elements and usage guidelines.</p>
+                            <div class="version-meta">
+                                <span><i class="fas fa-user"></i> You</span>
+                                <span><i class="fas fa-file"></i> Brand Guidelines.pdf</span>
+                                <span><i class="fas fa-tag"></i> Milestone</span>
+                            </div>
+                            <div class="version-actions">
+                                <a href="#" class="btn btn-sm btn-primary">Restore</a>
+                                <a href="#" class="btn btn-sm btn-secondary">Compare</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Archived Version -->
+                    <div class="timeline-item archived">
+                        <div class="timeline-card">
+                            <div class="version-date">March 10, 2023</div>
+                            <h3 class="version-title">Internal Review Draft</h3>
+                            <p class="version-description">Prepared for team review before client submission. Missing some application examples.</p>
+                            <div class="version-meta">
+                                <span><i class="fas fa-user"></i> Team</span>
+                                <span><i class="fas fa-file"></i> Brand Guidelines.pdf</span>
+                            </div>
+                            <div class="version-actions">
+                                <a href="#" class="btn btn-sm btn-primary">Restore</a>
+                                <a href="#" class="btn btn-sm btn-secondary">Compare</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== COMPARE SECTION ========== -->
+    <section class="version-compare" id="compare">
+        <div class="container">
+            <h2 class="section-title">Compare <span class="text-gradient">Versions</span></h2>
+            <p class="section-subtitle">See exactly what changed between any two versions</p>
+            
+            <div class="compare-container">
+                <div class="compare-column">
+                    <div class="compare-header">
+                        <h3 class="compare-title">Version 4.2</h3>
+                        <div class="compare-date">March 15, 2023</div>
+                    </div>
+                    <div class="compare-content">
+                        <div class="compare-diff">
+                            <h4>Brand Colors</h4>
+                            <p>Primary color changed from <span class="diff-removed">#4D2BCB</span> to <span class="diff-added">#6E45E2</span></p>
+                            <p>Added secondary color palette with 5 new variations</p>
+                        </div>
+                        <div class="compare-diff">
+                            <h4>Typography</h4>
+                            <p>Main heading changed from <span class="diff-removed">Montserrat</span> to <span class="diff-added">Poppins</span></p>
+                            <p>Base font size increased from <span class="diff-removed">16px</span> to <span class="diff-added">18px</span></p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="compare-column">
+                    <div class="compare-header">
+                        <h3 class="compare-title">Version 4.1</h3>
+                        <div class="compare-date">March 10, 2023</div>
+                    </div>
+                    <div class="compare-content">
+                        <div class="compare-diff">
+                            <h4>Brand Colors</h4>
+                            <p>Primary color: #4D2BCB</p>
+                            <p>Secondary colors not defined yet</p>
+                        </div>
+                        <div class="compare-diff">
+                            <h4>Typography</h4>
+                            <p>Main heading: Montserrat Bold</p>
+                            <p>Base font size: 16px</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== RESTORE SECTION ========== -->
+    <section class="version-restore" id="restore">
+        <div class="container">
+            <h2 class="restore-title">One-Click Version Restoration</h2>
+            <p class="restore-subtitle">Kembali ke versi sebelumnya dengan satu klik. Tidak ada yang pernah hilang secara permanen.</p>
+            
+            <div class="restore-actions">
+                <a href="#" class="btn btn-primary btn-lg">Start Free Trial</a>
+                <a href="#" class="btn btn-white btn-lg">See Pricing</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== FOOTER ========== -->
+    <footer class="version-footer">
+        <div class="container">
+            <div class="footer-grid">
+                <!-- Footer content here -->
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 CreativeFlow Pro. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Version History Interactive Scripts
+        document.addEventListener('DOMContentLoaded', function() {
+            // Header scroll effect
+            window.addEventListener('scroll', function() {
+                const header = document.querySelector('.version-header');
+                if (window.scrollY > 50) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+            });
+            
+            // Timeline animation
+            const timelineItems = document.querySelectorAll('.timeline-item');
+            
+            function animateTimeline() {
+                timelineItems.forEach((item, index) => {
+                    const position = item.getBoundingClientRect().top;
+                    const screenPosition = window.innerHeight / 1.3;
+                    
+                    if (position < screenPosition) {
+                        item.style.opacity = '1';
+                        item.style.transform = 'translateY(0)';
+                    }
+                });
+            }
+            
+            // Set initial state
+            timelineItems.forEach(item => {
+                item.style.opacity = '0';
+                item.style.transform = 'translateY(30px)';
+                item.style.transition = 'all 0.6s ease';
+            });
+            
+            // Run on load and scroll
+            window.addEventListener('load', animateTimeline);
+            window.addEventListener('scroll', animateTimeline);
+            
+            // Version comparison functionality
+            const versionCards = document.querySelectorAll('.timeline-card');
+            
+            versionCards.forEach(card => {
+                card.addEventListener('click', function(e) {
+                    if (e.target.classList.contains('btn')) return;
+                    
+                    this.classList.toggle('selected');
+                    
+                    // Update compare view
+                    updateCompareView();
+                });
+            });
+            
+            function updateCompareView() {
+                const selectedVersions = document.querySelectorAll('.timeline-card.selected');
+                
+                if (selectedVersions.length === 2) {
+                    // Logic to compare two versions
+                    console.log('Comparing versions...');
+                }
+            }
+            
+            // Restore version modal
+            const restoreButtons = document.querySelectorAll('.btn-primary');
+            
+            restoreButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    if (this.textContent.includes('Restore')) {
+                        e.preventDefault();
+                        showRestoreModal(this.closest('.timeline-card'));
+                    }
+                });
+            });
+            
+            function showRestoreModal(versionCard) {
+                const versionTitle = versionCard.querySelector('.version-title').textContent;
+                const versionDate = versionCard.querySelector('.version-date').textContent;
+                
+                // In a real implementation, you would show a modal here
+                alert(`Restoring version: ${versionTitle}\nDate: ${versionDate}`);
+            }
+        });
+    </script>
+</body>
+</html>
